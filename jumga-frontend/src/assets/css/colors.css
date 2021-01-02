@@ -1,6 +1,9 @@
 .color-yellow {
   background-color: #f7b100 !important;
 }
+.text-yellow {
+  color: #f7b100 !important;
+}
 
 .color-lightgray {
   background-color: #f5f5f5 !important;
@@ -32,4 +35,12 @@
 
 .white {
   background-color: #ffff !important;
+}
+.each-benefit p {
+  font-size: 12px !important;
+  text-align: justify;
+}
+
+.full-width {
+  min-width: 100% !important;
 }
