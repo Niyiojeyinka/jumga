@@ -254,3 +254,9 @@
 .predefined-desc div {
   margin-bottom: 6%;
 }
+.col-form-label {
+  font-size: 12px !important;
+}
+.action-text {
+  font-size: 18px;
+}

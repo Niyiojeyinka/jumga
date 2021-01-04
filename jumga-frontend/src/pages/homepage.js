@@ -3,7 +3,7 @@ import Reviews from "../divisions/reviews";
 import ProductList from "../divisions/productslist";
 import Footer from "../divisions/footer";
 import Header from "../divisions/header";
-
+import Slider from "../components/slider";
 const HomePage = () => {
   return (
     <>
