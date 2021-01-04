@@ -4,12 +4,12 @@ const LoginPage = () => {
   const handleChange = () => {};
   return (
     <EmptyTemplate>
-      <div class="row w-100">
+      <div class="row w-100 card py-3 px-4">
+        <b className="text-yellow action-text">Sign in to start shopping!</b>
+        <br></br>
+        <br></br>
         <div class="col-lg-4 mx-auto">
           <div class="auto-form-wrapper">
-            <b className="text-yellow action-text">
-              Sign in to start shopping!
-            </b>
             <br></br>
             <form action="" method="post">
               <div class="form-group">

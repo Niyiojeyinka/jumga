@@ -9,12 +9,16 @@ import HomePage from "./pages/homepage";
 import ProductPage from "./pages/productpage";
 import RegisterPage from "./pages/registerpage";
 import LoginPage from "./pages/loginpage";
+import ContactPage from "./pages/contactpage";
 function App() {
   return (
     <Router>
       <Switch>
         <Route path="/product/page">
           <ProductPage />
+        </Route>
+        <Route path="/contact">
+          <ContactPage />
         </Route>
         <Route path="/register">
           <RegisterPage />
