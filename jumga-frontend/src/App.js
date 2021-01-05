@@ -1,5 +1,6 @@
 import "./assets/css/colors.css";
 import "./assets/css/App.css";
+import "./assets/css/dashboard.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import $ from "jquery";
 import Popper from "popper.js";
@@ -13,10 +14,14 @@ import ContactPage from "./pages/contactpage";
 import OrdersPage from "./pages/userdashboard/orderspage";
 import PaymentsPage from "./pages/userdashboard/paymentspage";
 import WishList from "./pages/wishlist";
+import MerchantDashboard from "./pages/merchant/dashboard";
 function App() {
   return (
     <Router>
       <Switch>
+        <Route path="/merchant/dashboard">
+          <MerchantDashboard />
+        </Route>
         <Route path="/product/page">
           <ProductPage />
         </Route>

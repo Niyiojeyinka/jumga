@@ -275,3 +275,6 @@
   opacity: 0.8;
   border-radius: 0px !important;
 }
+nav#sidebar a {
+  color: white;
+}
