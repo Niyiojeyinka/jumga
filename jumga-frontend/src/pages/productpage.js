@@ -3,7 +3,7 @@ import Footer from "../divisions/footer";
 import Header from "../divisions/header";
 import TV from "../assets/images/tv.jpg";
 import Breadcrumb from "../components/breadcrumb";
-
+import NumberInput from "../components/numberinput";
 const ProductPage = () => {
   return (
     <>
@@ -24,6 +24,12 @@ const ProductPage = () => {
 
             <img src={TV} className="border m-1" />
             <div>
+              <NumberInput
+                max={100}
+                getValue={(value) => {
+                  console.log(value);
+                }}
+              />
               <button className="btn color-yellow text-white m-2">
                 Add to Cart
               </button>
@@ -78,7 +84,7 @@ const ProductPage = () => {
         </div>
       </section>
       <section className="p-5">
-        <ProductList />
+        <ProductList title="Recent Product" />
       </section>
 
       <Footer />

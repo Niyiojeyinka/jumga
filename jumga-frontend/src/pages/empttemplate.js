@@ -7,7 +7,7 @@ const EmptyTemplate = (props) => {
     <>
       <Header>{props.children}</Header>
       <section className="p-5">
-        <ProductList />
+        <ProductList showAddToWishlistBtn={true} />
       </section>
 
       <Footer />

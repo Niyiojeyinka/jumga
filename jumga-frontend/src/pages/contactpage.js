@@ -8,9 +8,8 @@ const ContactPage = () => {
         <div className="card-body">
           <h4 className="card-title text-yellow">Contact Us</h4>
           <p className="card-description">
-            {" "}
-            Got a question/feedback? send us a message here,we will get back to
-            you.
+            OrdersPage Got a question/feedback? send us a message here,we will
+            get back to you.
           </p>
           <form className="forms-sample">
             <div className="form-group">

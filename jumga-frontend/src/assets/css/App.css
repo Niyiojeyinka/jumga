@@ -120,7 +120,7 @@
 }
 .each-product-overlay {
   position: absolute;
-  top: 45%;
+  top: 50%;
   background-color: aliceblue;
   opacity: 0.7;
 }
@@ -259,4 +259,19 @@
 }
 .action-text {
   font-size: 18px;
+}
+
+.num-input-style {
+  border: 1px solid #d3d3d3 !important;
+  max-width: 80px;
+  outline: none !important;
+  height: 40px;
+}
+
+.num-container-btn .left,
+.right {
+  margin-top: -3px;
+  height: 40px;
+  opacity: 0.8;
+  border-radius: 0px !important;
 }

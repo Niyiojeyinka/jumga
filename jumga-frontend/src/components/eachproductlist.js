@@ -1,5 +1,12 @@
 import tv from "../assets/images/tv.jpg";
-const EachProductList = () => {
+const EachProductList = (props) => {
+  const wishlist = props.showAddToWishlistBtn ? (
+    <button className="btn color-yellow mx-5">
+      <i className="fa fa-heart text-white"></i>
+    </button>
+  ) : (
+    <></>
+  );
   return (
     <div className="each-product-list  m-3">
       <div style={{ display: "inline" }}>
@@ -21,9 +28,7 @@ const EachProductList = () => {
         <button className="btn color-yellow mx-5">
           <i className="fa fa-shopping-cart text-white"></i>
         </button>
-        <button className="btn color-yellow mx-5">
-          <i className="fa fa-heart text-white"></i>
-        </button>
+        {wishlist}
       </div>
     </div>
   );

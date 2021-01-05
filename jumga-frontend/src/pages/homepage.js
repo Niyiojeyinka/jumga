@@ -11,12 +11,12 @@ const HomePage = () => {
         <Slider />
       </Header>
       <section className="p-5">
-        <ProductList />
+        <ProductList showAddToWishlistBtn={true} title="Recent Products" />
       </section>
       <Benefits />
 
       <section className="p-5">
-        <ProductList />
+        <ProductList showAddToWishlistBtn={true} title="Top Products" />
       </section>
       <section className="p-5">
         <Reviews />
