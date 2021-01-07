@@ -15,10 +15,15 @@ import OrdersPage from "./pages/userdashboard/orderspage";
 import PaymentsPage from "./pages/userdashboard/paymentspage";
 import WishList from "./pages/wishlist";
 import MerchantDashboard from "./pages/merchant/dashboard";
+import RiderDashboard from "./pages/dispatchrider/dashboard";
+
 function App() {
   return (
     <Router>
       <Switch>
+        <Route path="/rider/dashboard">
+          <RiderDashboard />
+        </Route>
         <Route path="/merchant/dashboard">
           <MerchantDashboard />
         </Route>
