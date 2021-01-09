@@ -1,15 +1,11 @@
 module.exports = (sequelize, Sequelize) => {
   const User = sequelize.define("User", {
-    firstname: {
+    name: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    lastname: {
+    country_code: {
       type: Sequelize.STRING,
-      allowNull: false,
-    },
-    country_id: {
-      type: Sequelize.INTEGER,
       allowNull: false,
     },
     email: {
@@ -18,23 +14,21 @@ module.exports = (sequelize, Sequelize) => {
     },
     email_token: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     email_v_status: {
-      type: DataTypes.ENUM,
+      type: Sequelize.ENUM,
       values: ["success", "pending"],
+      defaultValue: "pending",
     },
     password: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    account_bal: {
-      type: Sequelize.DECIMAL(10, 2),
-      allowNull: false,
-    },
     status: {
-      type: DataTypes.ENUM,
+      type: Sequelize.ENUM,
       values: ["active", "pending", "suspended"],
+      defaultValue: "active",
     },
   });
 

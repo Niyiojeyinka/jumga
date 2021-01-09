@@ -14,7 +14,7 @@ module.exports = (sequelize, Sequelize) => {
     },
 
     status: {
-      type: DataTypes.ENUM,
+      type: Sequelize.ENUM,
       values: ["unread", "read", "draft"],
     },
   });

@@ -14,7 +14,7 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
     },
     payee_type: {
-      type: DataTypes.ENUM,
+      type: Sequelize.ENUM,
       values: ["merchant", "dispatcher"],
     },
   });

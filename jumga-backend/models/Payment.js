@@ -1,11 +1,11 @@
 module.exports = (sequelize, Sequelize) => {
   const Payment = sequelize.define("Payment", {
     status: {
-      type: DataTypes.ENUM,
+      type: Sequelize.ENUM,
       values: ["successful", "pending", "failed"],
     },
     type: {
-      type: DataTypes.ENUM,
+      type: Sequelize.ENUM,
       values: ["deposit", "payment"],
     },
     payer_id: {
@@ -13,7 +13,7 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
     },
     payer_type: {
-      type: DataTypes.ENUM,
+      type: Sequelize.ENUM,
       values: ["user", "merchant", "dispatcher"],
     },
     ref: {

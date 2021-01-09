@@ -1,15 +1,19 @@
 module.exports = (sequelize, Sequelize) => {
-  const Merchant = sequelize.define("Merchant", {
+  const Customer = sequelize.define("Customer", {
     user_id: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
+    address: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
     status: {
       type: Sequelize.ENUM,
       values: ["active", "pending", "suspended"],
-      defaultValue: "pending",
+      defaultValue: "active",
     },
   });
 
-  return Merchant;
+  return Customer;
 };
