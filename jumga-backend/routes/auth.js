@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const useCor = require("../middlewares/cors");
 
-router.post("/create", useCor);
+router.post("/", () => {
+  return "data";
+});
+
 module.exports = router;
