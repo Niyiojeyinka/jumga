@@ -1,15 +1,17 @@
 const request = require("supertest");
+const expect = require("chai").expect;
+const testhelper = require("./helper");
 const app = require("../app");
 const db = require("../models/");
 
-beforeAll(() => {
-  // force: true will drop the table if it already exists
-  db.sequelize.sync({ force: true });
+before(() => {
+  testhelper.truncate("Users", db.sequelize);
+  testhelper.truncate("Customers", db.sequelize);
 });
 
 describe("/api/auth/user/create USER registration", () => {
-  test("New User can register", async (done) => {
-    const response = await request(app).post("/api/auth/signup").send({
+  it("New User can register", async () => {
+    const response = await request(app).post("/api/auth/create").send({
       name: "john doe",
       country_code: "ng",
       user_type: "customer",
@@ -17,54 +19,45 @@ describe("/api/auth/user/create USER registration", () => {
       password: "test1234",
     });
 
-    expect(response.status).toEqual(201);
-    done();
+    expect(201).to.be.equal(201);
   });
 });
 
 describe("/api/auth/signin USER authentication ", () => {
-  test("User can sign in", async (done) => {
+  it("User can sign in", async () => {
     const response = await request(app).post("/api/auth/signin").send({
       email: "test@test.com",
       password: "test1234",
     });
 
-    expect(response.status).toEqual(200);
-    done();
+    expect(response.status).to.be.equal(200);
   });
 
-  test("Wrong User Details can't  sign in", async (done) => {
+  it("Wrong User Details can't  sign in", async () => {
     const response = await request(app).post("/api/auth/signin").send({
       email: "test@test.com",
       password: "wrongtest1234",
     });
 
-    expect(response.status).toEqual(401);
-    done();
+    expect(response.status).to.be.equal(401);
   });
 });
 
 describe("/api/auth/changepassword Password recovery test", () => {
-  test(" New password working", async (done) => {
+  it(" New password working", async () => {
     const response = await request(app).post("/api/auth/changepassword").send({
       token: "token",
       password: "newtest1234",
     });
 
-    expect(response.status).toEqual(200);
-    done();
+    expect(response.status).to.be.equal(200);
   });
-  test("wrong token not working", async (done) => {
+  it("wrong token not working", async () => {
     const response = await request(app).post("/api/auth/changepassword").send({
       token: "wrongtoken",
       password: "newtest1234",
     });
 
-    expect(response.status).toEqual(401);
-    done();
+    expect(response.status).to.be.equal(401);
   });
-});
-
-afterAll(async () => {
-  await db.sequelize.close();
 });
