@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
   const Merchant = sequelize.define("Merchant", {
-    user_id: {
+    UserId: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
@@ -10,6 +10,5 @@ module.exports = (sequelize, Sequelize) => {
       defaultValue: "pending",
     },
   });
-
   return Merchant;
 };

@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  const Dispatcher = sequelize.define("Dispatcher", {
+  const Admin = sequelize.define("Admin", {
     UserId: {
       type: Sequelize.INTEGER,
       allowNull: false,
@@ -7,9 +7,8 @@ module.exports = (sequelize, Sequelize) => {
     status: {
       type: Sequelize.ENUM,
       values: ["active", "pending", "suspended"],
-      defaultValue: "active",
+      defaultValue: "pending",
     },
   });
-
-  return Dispatcher;
+  return Admin;
 };

@@ -1,10 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
   const Wishlist = sequelize.define("Wishlist", {
-    product_id: {
+    ProductId: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
-    user_id: {
+    UserId: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },

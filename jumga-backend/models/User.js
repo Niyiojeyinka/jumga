@@ -25,6 +25,11 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    role: {
+      type: Sequelize.ENUM,
+      values: ["customer", "dispatcher", "merchant", "admin"],
+      defaultValue: "customer",
+    },
     status: {
       type: Sequelize.ENUM,
       values: ["active", "pending", "suspended"],

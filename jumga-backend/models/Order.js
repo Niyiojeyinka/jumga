@@ -1,22 +1,14 @@
 module.exports = (sequelize, Sequelize) => {
-  const Product = sequelize.define("Product", {
-    name: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    description: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    CategoryId: {
+  const Order = sequelize.define("Order", {
+    ProductId: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
-    MerchantId: {
+    UserId: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
-    in_stock: {
+    quantity: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
@@ -26,10 +18,10 @@ module.exports = (sequelize, Sequelize) => {
     },
     status: {
       type: Sequelize.ENUM,
-      values: ["active", "pending", "deleted"],
-      defaultValue: "active",
+      values: ["pending-delivery", "pending", "fulfilled", "canceled"],
+      defaultValue: "pending",
     },
   });
 
-  return Product;
+  return Order;
 };

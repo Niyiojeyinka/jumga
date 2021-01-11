@@ -8,7 +8,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.ENUM,
       values: ["deposit", "payment"],
     },
-    payer_id: {
+    PayerId: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
