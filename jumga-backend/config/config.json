@@ -1,15 +1,15 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "shortster",
+    "username": "rootroot",
+    "password": "rootroot",
+    "database": "jumga",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "shortstertest",
+    "username": "rootroot",
+    "password": "rootroot",
+    "database": "jumgatest",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
