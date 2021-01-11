@@ -4,10 +4,6 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
-    address: {
-      type: Sequelize.STRING,
-      allowNull: true,
-    },
     status: {
       type: Sequelize.ENUM,
       values: ["active", "pending", "suspended"],

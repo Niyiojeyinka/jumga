@@ -12,6 +12,7 @@ function applyExtraSetup(sequelize) {
     Wishlist,
     Withdrawalsetting,
     Withdrawal,
+    Address,
     Account,
     Admin,
   } = sequelize.models;
@@ -27,6 +28,7 @@ function applyExtraSetup(sequelize) {
   });
   User.hasMany(Wishlist);
   User.hasMany(Order);
+  User.hasMany(Address);
   User.hasMany(Cart);
   Product.hasMany(Featureimage);
   User.hasOne(Withdrawalsetting);
