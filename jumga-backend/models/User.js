@@ -12,7 +12,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    email_token: {
+    token: {
       type: Sequelize.STRING,
       allowNull: true,
     },
