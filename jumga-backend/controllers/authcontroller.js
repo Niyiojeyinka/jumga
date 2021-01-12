@@ -88,17 +88,6 @@ exports.login = async (req, res) => {
       throw new Error("User not found");
     }
 
-    /*bcrypt
-      .compare(req.body.password, user.password)
-      .then((valid) => {
-        if (!valid) {
-          throw new Error("Incorrec Password");
-        }
-      })
-      .catch((e) => {
-        throw new Error(e);
-      });*/
-
     const valid = await bcrypt.compare(req.body.password, user.password);
     if (!valid) {
       throw new Error("Incorrec Password");

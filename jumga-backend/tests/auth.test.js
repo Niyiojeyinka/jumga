@@ -43,6 +43,26 @@ describe("/api/auth/signin USER authentication ", () => {
   });
 });
 
+describe("/api/auth/requesttoken Request Token -Password recovery test", () => {
+  it(" Can request password change token", async () => {
+    const response = await request(app).post("/api/auth/requesttoken").send({
+      email: "test@test.com",
+      url: "url.com.ng/verify",
+    });
+
+    expect(response.status).to.be.equal(200);
+  });
+
+  it("Cannot request token for wrong email", async () => {
+    const response = await request(app).post("/api/auth/requesttoken").send({
+      email: "testweong@test.com",
+      url: "url.com.ng/verify",
+    });
+
+    expect(response.status).to.be.equal(400);
+  });
+});
+
 describe("/api/auth/changepassword Password recovery test", () => {
   it(" New password working", async () => {
     const response = await request(app).post("/api/auth/changepassword").send({
