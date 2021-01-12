@@ -1,6 +1,8 @@
 const db = require("../models");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const md5 = require("md5");
+const mail = require("../helpers/mail");
 
 /** Register new user e.g merchant,dispatcher ,customer and admin
  *  @param {input-param} fullname
@@ -107,6 +109,140 @@ exports.login = async (req, res) => {
     });
   } catch (e) {
     return res.status(401).json({
+      result: 0,
+      error: e,
+      data: [],
+    });
+  }
+};
+
+/** request password recovery  token e.g merchant,dispatcher ,customer and admin
+ * @param {input-param} email
+ * @param {input-param} url
+ */
+exports.requestToken = async (req, res) => {
+  try {
+    const user = await db.User.findOne({
+      where: {
+        email: req.body.email,
+      },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    //create token
+    const token = md5(new Date());
+
+    //save token
+    db.User.update(
+      { token: token },
+      {
+        where: {
+          email: req.body.email,
+        },
+      }
+    );
+    //send token
+    mail.sendMail(
+      req.body.email,
+
+      {
+        name: user.name,
+        title: "JUMGA Password Recovery",
+        url: req.body.url + "/" + token,
+      },
+      "requesttoken",
+      function (error, resp) {
+        if (error) {
+          // console.log(await error);
+          void 0;
+        } else {
+          //console.log(await resp.response);
+          void 0;
+        }
+      }
+    );
+    return res.status(200).json({
+      result: 1,
+      message: "Recovery Email Sent",
+      data: {},
+      error: [],
+    });
+  } catch (e) {
+    return res.status(400).json({
+      result: 0,
+      error: e,
+      data: [],
+    });
+  }
+};
+
+/** change password e.g merchant,dispatcher ,customer and admin
+ * @param {url-param} token
+ * @param {input-param}  password  new password
+ */
+exports.changepassword = async (req, res) => {
+  try {
+    const user = await db.User.findOne({
+      where: {
+        token: req.body.token,
+      },
+    });
+
+    if (!user) {
+      throw new Error("Token now not valid");
+    }
+
+    bcrypt
+      .hash(req.body.password, 10)
+      .then(async (hash) => {
+        //save token
+        db.User.update(
+          {
+            password: hash,
+            token: null,
+          },
+          {
+            where: {
+              token: req.body.token,
+            },
+          }
+        );
+      })
+      .catch((e) => {
+        throw e;
+      });
+
+    /* //send token
+    mail.sendMail(
+      req.body.email,
+
+      {
+        name: user.name,
+        title: "JUMGA Password Recovery",
+        url: req.body.url + "/" + token,
+      },
+      "requesttoken",
+      function (error, resp) {
+        if (error) {
+          // console.log(await error);
+          void 0;
+        } else {
+          //console.log(await resp.response);
+          void 0;
+        }
+      }
+    );*/
+    return res.status(200).json({
+      result: 1,
+      error: [],
+      message: "Password updated successfully",
+      data: [],
+    });
+  } catch (e) {
+    return res.status(400).json({
       result: 0,
       error: e,
       data: [],

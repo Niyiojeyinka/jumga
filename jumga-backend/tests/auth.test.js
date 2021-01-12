@@ -4,18 +4,13 @@ const testhelper = require("./helper");
 const app = require("../app");
 const db = require("../models/");
 
-before(() => {
-  testhelper.truncate("Users", db.sequelize);
-  testhelper.truncate("Customers", db.sequelize);
-});
-
 describe("/api/auth/user/create USER registration", () => {
   it("New User can register", async () => {
     const response = await request(app).post("/api/auth/create").send({
       name: "john doe",
       country_code: "ng",
       user_type: "customer",
-      email: "test@test.com",
+      email: "olaniyiojeyinka@gmail.com",
       password: "test1234",
     });
 
@@ -26,7 +21,7 @@ describe("/api/auth/user/create USER registration", () => {
 describe("/api/auth/signin USER authentication ", () => {
   it("User can sign in", async () => {
     const response = await request(app).post("/api/auth/signin").send({
-      email: "test@test.com",
+      email: "olaniyiojeyinka@gmail.com",
       password: "test1234",
     });
 
@@ -35,7 +30,7 @@ describe("/api/auth/signin USER authentication ", () => {
 
   it("Wrong User Details can't  sign in", async () => {
     const response = await request(app).post("/api/auth/signin").send({
-      email: "test@test.com",
+      email: "olaniyiojeyinka@gmail.com",
       password: "wrongtest1234",
     });
 
@@ -46,7 +41,7 @@ describe("/api/auth/signin USER authentication ", () => {
 describe("/api/auth/requesttoken Request Token -Password recovery test", () => {
   it(" Can request password change token", async () => {
     const response = await request(app).post("/api/auth/requesttoken").send({
-      email: "test@test.com",
+      email: "olaniyiojeyinka@gmail.com",
       url: "url.com.ng/verify",
     });
 
@@ -64,13 +59,31 @@ describe("/api/auth/requesttoken Request Token -Password recovery test", () => {
 });
 
 describe("/api/auth/changepassword Password recovery test", () => {
-  it(" New password working", async () => {
+  it(" Right Token can change password", async () => {
+    //insert token
+    await db.User.update(
+      { token: "token" },
+      {
+        where: {
+          email: "olaniyiojeyinka@gmail.com",
+        },
+      }
+    );
     const response = await request(app).post("/api/auth/changepassword").send({
       token: "token",
       password: "newtest1234",
     });
 
     expect(response.status).to.be.equal(200);
+
+    it("New password working", async () => {
+      const response = await request(app).post("/api/auth/signin").send({
+        email: "olaniyiojeyinka@gmail.com",
+        password: "newtest1234",
+      });
+
+      expect(response.status).to.be.equal(200);
+    });
   });
   it("wrong token not working", async () => {
     const response = await request(app).post("/api/auth/changepassword").send({
@@ -78,6 +91,8 @@ describe("/api/auth/changepassword Password recovery test", () => {
       password: "newtest1234",
     });
 
-    expect(response.status).to.be.equal(401);
+    expect(response.status).to.be.equal(400);
+    testhelper.truncate("Users", db.sequelize);
+    testhelper.truncate("Customers", db.sequelize);
   });
 });

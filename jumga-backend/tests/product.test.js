@@ -3,11 +3,6 @@ const app = require("../app");
 const db = require("../models/");
 const expect = require("chai").expect;
 
-/*beforeAll(async () => {
-  // force: true will drop the table if it already exists
-  await db.sequelize.sync({ force: true });
-});*/
-
 describe("api/products Products Test ", () => {
   it("Product can be added", async () => {
     const response = await request(app).post("/api/products").send({
