@@ -5,6 +5,7 @@ function applyExtraSetup(sequelize) {
     User,
     Dispatcher,
     Customer,
+    Category,
     Order,
     Cart,
     Featureimage,
@@ -30,6 +31,7 @@ function applyExtraSetup(sequelize) {
   User.hasMany(Order);
   User.hasMany(Address);
   User.hasMany(Cart);
+  Category.hasMany(Product);
   Product.hasMany(Featureimage);
   User.hasOne(Withdrawalsetting);
   User.hasOne(Account);

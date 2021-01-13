@@ -4,10 +4,15 @@ const testhelper = require("./helper");
 const app = require("../app");
 const db = require("../models/");
 
+beforeEach(function (done) {
+  setTimeout(function () {
+    done();
+  }, 500);
+});
 describe("/api/auth/user/create USER registration", () => {
   it("New User can register", async () => {
     const response = await request(app).post("/api/auth/create").send({
-      name: "john doe",
+      name: "Olaniyi ojeyinka",
       country_code: "ng",
       user_type: "customer",
       email: "olaniyiojeyinka@gmail.com",
@@ -62,7 +67,7 @@ describe("/api/auth/changepassword Password recovery test", () => {
   it(" Right Token can change password", async () => {
     //insert token
     await db.User.update(
-      { token: "token" },
+      { token: "lets" },
       {
         where: {
           email: "olaniyiojeyinka@gmail.com",
@@ -70,20 +75,19 @@ describe("/api/auth/changepassword Password recovery test", () => {
       }
     );
     const response = await request(app).post("/api/auth/changepassword").send({
-      token: "token",
-      password: "newtest1234",
+      token: "lets",
+      password: "hey",
     });
 
     expect(response.status).to.be.equal(200);
-
-    it("New password working", async () => {
-      const response = await request(app).post("/api/auth/signin").send({
-        email: "olaniyiojeyinka@gmail.com",
-        password: "newtest1234",
-      });
-
-      expect(response.status).to.be.equal(200);
+  });
+  it("New password working", async () => {
+    const response = await request(app).post("/api/auth/signin").send({
+      email: "olaniyiojeyinka@gmail.com",
+      password: "hey",
     });
+
+    expect(response.status).to.be.equal(200);
   });
   it("wrong token not working", async () => {
     const response = await request(app).post("/api/auth/changepassword").send({
@@ -96,3 +100,7 @@ describe("/api/auth/changepassword Password recovery test", () => {
     testhelper.truncate("Customers", db.sequelize);
   });
 });
+/*
+after(() => {
+  
+});*/
