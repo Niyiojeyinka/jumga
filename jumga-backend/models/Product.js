@@ -26,8 +26,8 @@ module.exports = (sequelize, Sequelize) => {
     },
     status: {
       type: Sequelize.ENUM,
-      values: ["active", "pending", "deleted"],
-      defaultValue: "active",
+      values: ["published", "draft", "deleted"],
+      defaultValue: "draft",
     },
   });
 

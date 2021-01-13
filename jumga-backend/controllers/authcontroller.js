@@ -89,24 +89,33 @@ exports.login = async (req, res) => {
     if (!user) {
       throw new Error("User not found");
     }
+    /* bcrypt.compare(req.body.password, user.password).then((valid) => {
+      if (!valid) {
+        return res.status(401).json({
+          result: 0,
+        });
+      }
+    });*/
 
     const valid = await bcrypt.compare(req.body.password, user.password);
+    console.log(valid);
+
     if (!valid) {
       throw new Error("Incorrec Password");
+    } else {
+      const token = jwt.sign({ userId: user.id }, "RANDOM_KEY", {
+        expiresIn: "24h",
+      });
+      return res.status(200).json({
+        result: 1,
+        message: "Signed in Successfuly",
+        data: {
+          userId: user.id,
+          token: token,
+        },
+        error: [],
+      });
     }
-    const token = jwt.sign({ userId: user.id }, "RANDOM_KEY", {
-      expiresIn: "24h",
-    });
-
-    return res.status(200).json({
-      result: 1,
-      message: "Signed in Successfuly",
-      data: {
-        userId: user.id,
-        token: token,
-      },
-      error: [],
-    });
   } catch (e) {
     return res.status(401).json({
       result: 0,
@@ -195,25 +204,20 @@ exports.changepassword = async (req, res) => {
       throw new Error("Token now not valid");
     }
 
-    bcrypt
-      .hash(req.body.password, 10)
-      .then(async (hash) => {
-        //save token
-        db.User.update(
-          {
-            password: hash,
-            token: null,
+    bcrypt.hash(req.body.password, 10).then(async (hash) => {
+      //save token
+      await db.User.update(
+        {
+          password: hash,
+          token: null,
+        },
+        {
+          where: {
+            id: user.id,
           },
-          {
-            where: {
-              token: req.body.token,
-            },
-          }
-        );
-      })
-      .catch((e) => {
-        throw e;
-      });
+        }
+      );
+    });
 
     /* //send token
     mail.sendMail(
