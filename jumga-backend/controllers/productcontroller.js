@@ -19,9 +19,10 @@ exports.addProduct = async (req, res) => {
       data: { product },
     });
   } catch (e) {
+    console.log(e.toString());
     return res.status(400).json({
       result: 0,
-      error: e,
+      error: e.toString(),
       data: [],
     });
   }

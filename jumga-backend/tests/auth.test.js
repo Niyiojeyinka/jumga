@@ -4,6 +4,14 @@ const testhelper = require("./helper");
 const app = require("../app");
 const db = require("../models/");
 
+before(() => {
+  testhelper.truncate("Merchants", db.sequelize);
+  testhelper.truncate("Products", db.sequelize);
+  testhelper.truncate("Categories", db.sequelize);
+  testhelper.truncate("Users", db.sequelize);
+  testhelper.truncate("Customers", db.sequelize);
+});
+
 beforeEach(function (done) {
   setTimeout(function () {
     done();
@@ -17,9 +25,10 @@ describe("/api/auth/user/create USER registration", () => {
       user_type: "customer",
       email: "olaniyiojeyinka@gmail.com",
       password: "test1234",
+      url: "www.frontend.com",
     });
 
-    expect(201).to.be.equal(201);
+    expect(response.status).to.be.equal(201);
   });
 });
 
@@ -96,11 +105,5 @@ describe("/api/auth/changepassword Password recovery test", () => {
     });
 
     expect(response.status).to.be.equal(400);
-    testhelper.truncate("Users", db.sequelize);
-    testhelper.truncate("Customers", db.sequelize);
   });
 });
-/*
-after(() => {
-  
-});*/

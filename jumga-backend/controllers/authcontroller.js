@@ -14,59 +14,79 @@ const mail = require("../helpers/mail");
  */
 exports.register = async (req, res) => {
   try {
-    const user = await db.User.findOne({
+    const checkUser = await db.User.findOne({
       where: {
         email: req.body.email,
       },
     });
 
-    if (user) {
+    if (checkUser) {
       throw new Error("User with this Email Already Exists");
     }
-    bcrypt
-      .hash(req.body.password, 10)
-      .then(async (hash) => {
-        const user = await db.User.create({
-          name: req.body.name,
-          country_code: req.body.country_code,
-          email: req.body.email,
-          password: hash,
-          role: req.body.user_type,
+    if (req.body.user_type.toLowerCase() == "admin") {
+      throw new Error("Error Invalid User Type");
+    }
+
+    const hashed = await bcrypt.hash(req.body.password, 10);
+    const user = await db.User.create({
+      name: req.body.name,
+      country_code: req.body.country_code,
+      email: req.body.email,
+      password: hashed,
+      role: req.body.user_type,
+    });
+    switch (req.body.user_type) {
+      case "merchant":
+        const merchant = await db.Merchant.create({
+          UserId: user.id,
         });
-        if (req.body.user_type.toLowerCase() == "admin") {
-          throw new Error("Error Invalid User Type");
-        }
-        switch (req.body.user_type) {
-          case "merchant":
-            const merchant = await db.Merchant.create({
-              UserId: user.id,
-            });
-            break;
-          case "dispatcher":
-            const dispatcher = await db.Dispatcher.create({
-              UserId: user.id,
-            });
-            break;
-          default:
-            const customer = await db.Customer.create({
-              UserId: user.id,
-            });
-            break;
-        }
-        return res.status(201).json({
-          result: 1,
-          error: [],
-          message: "Registered Successfuly",
-          data: [],
+        break;
+      case "dispatcher":
+        const dispatcher = await db.Dispatcher.create({
+          UserId: user.id,
         });
-      })
-      .catch((e) => {
-        throw e;
-      });
+
+        break;
+      default:
+        const customer = await db.Customer.create({
+          UserId: user.id,
+        });
+
+        break;
+    }
+
+    //send token
+    mail.sendMail(
+      req.body.email,
+
+      {
+        name: req.body.name,
+        title: "JUMGA " + req.body.user_type.toUpperCase() + " Welcome",
+        url: req.body.url,
+        activation_fee: "50USD",
+      },
+      `${req.body.user_type.toLowerCase()}welcome`,
+      function (error, resp) {
+        if (error) {
+          console.log(error);
+          void 0;
+        } else {
+          console.log(resp.response);
+          void 0;
+        }
+      }
+    );
+
+    return res.status(201).json({
+      result: 1,
+      error: [],
+      message: "Registered Successfuly",
+      data: [],
+    });
   } catch (e) {
     return res.status(400).json({
       result: 0,
-      error: e,
+      error: e.toString(),
       data: [],
     });
   }

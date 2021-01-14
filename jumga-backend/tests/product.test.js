@@ -3,17 +3,22 @@ const app = require("../app");
 const db = require("../models/");
 const expect = require("chai").expect;
 const testhelper = require("./helper");
-
+beforeEach(function (done) {
+  setTimeout(function () {
+    done();
+  }, 200);
+});
 describe("api/products Products Test ", () => {
   it("Product can be added", async () => {
-    const resp = await request(app).post("/api/auth/create").send({
+    await request(app).post("/api/auth/create").send({
       name: "Olaniyi ojeyinka",
       country_code: "ng",
       user_type: "merchant",
       email: "olaniyiojeyinka@gmail.com",
       password: "test1234",
+      url: "www.frontend.com",
     });
-    db.Category.create({
+    await db.Category.create({
       name: "Electronics",
       slug: "Electronics",
     });
@@ -43,8 +48,7 @@ describe("api/products Products Test ", () => {
   });
 });
 
+/*
 after(() => {
-  testhelper.truncate("Users", db.sequelize);
-  testhelper.truncate("Merchants", db.sequelize);
-  testhelper.truncate("Products", db.sequelize);
-});
+  
+});*/
