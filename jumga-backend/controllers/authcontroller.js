@@ -5,11 +5,11 @@ const md5 = require("md5");
 const mail = require("../helpers/mail");
 
 /** Register new user e.g merchant,dispatcher ,customer and admin
- *  @param {input-param} fullname
- * @param {input-param} country_code
- * @param {input-param} email
- * @param {input-param} password
- *@param {input-param} usertype
+ * @param {input} fullname
+ * @param {input} country_code
+ * @param {input} email
+ * @param {input} password
+ * @param {input} usertype
 
  */
 exports.register = async (req, res) => {
@@ -73,9 +73,9 @@ exports.register = async (req, res) => {
 };
 
 /** sign in user e.g merchant,dispatcher ,customer and admin
- * @param {input-param} email
- * @param {input-param} password
- *@param {input-param} usertype
+ * @param {input} email
+ * @param {input} password
+ *@param {input} usertype
 
  */
 exports.login = async (req, res) => {
@@ -89,16 +89,8 @@ exports.login = async (req, res) => {
     if (!user) {
       throw new Error("User not found");
     }
-    /* bcrypt.compare(req.body.password, user.password).then((valid) => {
-      if (!valid) {
-        return res.status(401).json({
-          result: 0,
-        });
-      }
-    });*/
 
     const valid = await bcrypt.compare(req.body.password, user.password);
-    console.log(valid);
 
     if (!valid) {
       throw new Error("Incorrec Password");
@@ -126,8 +118,8 @@ exports.login = async (req, res) => {
 };
 
 /** request password recovery  token e.g merchant,dispatcher ,customer and admin
- * @param {input-param} email
- * @param {input-param} url
+ * @param {input} email
+ * @param {input} url
  */
 exports.requestToken = async (req, res) => {
   try {
@@ -189,8 +181,8 @@ exports.requestToken = async (req, res) => {
 };
 
 /** change password e.g merchant,dispatcher ,customer and admin
- * @param {url-param} token
- * @param {input-param}  password  new password
+ * @param {url} token
+ * @param {input}  password  new password
  */
 exports.changepassword = async (req, res) => {
   try {

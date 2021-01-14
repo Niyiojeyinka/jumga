@@ -4,10 +4,6 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.ENUM,
       values: ["successful", "pending", "failed"],
     },
-    type: {
-      type: Sequelize.ENUM,
-      values: ["deposit", "payment"],
-    },
     PayeeId: {
       type: Sequelize.INTEGER,
       allowNull: false,
