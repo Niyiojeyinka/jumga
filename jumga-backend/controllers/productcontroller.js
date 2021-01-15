@@ -106,8 +106,8 @@ exports.getRecentProduct = async (req, res) => {
     //req.params.limit req.params.offset
 
     const products = await db.Product.findAll({
-      offset: req.params.offset ? req.params.offset : 0,
-      limit: req.params.limit,
+      limit: parseInt(req.params.limit),
+      offset: req.params.offset ? parseInt(req.params.offset) : 0,
       order: [["id", "DESC"]],
     });
 

@@ -2,7 +2,7 @@ const request = require("supertest");
 const app = require("../app");
 const db = require("../models");
 const expect = require("chai").expect;
-const testhelper = require("./helper");
+const testhelper = require("../tests/helper");
 beforeEach(function (done) {
   setTimeout(function () {
     done();

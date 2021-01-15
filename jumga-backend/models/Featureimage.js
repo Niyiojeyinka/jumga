@@ -1,7 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
   const Featureimage = sequelize.define("Featureimage", {
     slug: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
       allowNull: false,
     },
     ProductId: {
