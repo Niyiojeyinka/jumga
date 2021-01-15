@@ -109,6 +109,7 @@ exports.getRecentProduct = async (req, res) => {
       limit: parseInt(req.params.limit),
       offset: req.params.offset ? parseInt(req.params.offset) : 0,
       order: [["id", "DESC"]],
+      include: ["images"],
     });
 
     return res.status(200).json({

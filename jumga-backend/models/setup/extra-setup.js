@@ -32,7 +32,14 @@ function applyExtraSetup(sequelize) {
   User.hasMany(Address);
   User.hasMany(Cart);
   Category.hasMany(Product);
-  Product.hasMany(Featureimage);
+  Product.hasMany(Featureimage, {
+    foreignKey: "ProductId",
+    as: "images",
+  });
+  Featureimage.belongsTo(Product, {
+    foreignKey: "id",
+    as: "product",
+  });
   User.hasOne(Withdrawalsetting);
   User.hasOne(Account);
   User.hasMany(Withdrawal, {
