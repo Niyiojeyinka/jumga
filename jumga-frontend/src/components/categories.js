@@ -1,21 +1,24 @@
 import * as React from "react";
-
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 const Categories = () => {
   const [displayCategory, setDisplayCategory] = React.useState(true);
+  let categoriesData = useSelector((store) => store.categories);
+  categoriesData =
+    categoriesData.body?.data.categories != undefined
+      ? categoriesData.body?.data.categories
+      : [];
+
+  const x = categoriesData.map((category, index) => {
+    return (
+      <li key={index}>
+        <Link to={`/category/${category.slug}`}>{category.name}</Link>
+      </li>
+    );
+  });
   const categoriesList = (
     <div className="cat-box">
-      <ul>
-        <li>Kitchen Appliancces</li>
-        <li>Food & Drugs</li>
-        <li>Electronics</li>
-        <li>Books</li>
-        <li>Mobile Phones</li>
-        <li>Electronics</li>
-        <li>Books</li>
-        <li>Mobile Phones</li>
-        <li>Computers</li>
-        <li>others</li>
-      </ul>
+      <ul>{x}</ul>
     </div>
   );
 

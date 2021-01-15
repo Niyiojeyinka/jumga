@@ -4,6 +4,8 @@ import Header from "../divisions/header";
 import TV from "../assets/images/tv.jpg";
 import Breadcrumb from "../components/breadcrumb";
 import NumberInput from "../components/numberinput";
+import { useDispatch } from "react-redux";
+
 const ProductPage = () => {
   return (
     <>

@@ -1,8 +1,13 @@
 import CountLoveCount from "../components/cartlovecount";
 import SocialLinks from "../components/sociallinks";
 import Logo from "../components/logo";
-
+import { useSelector } from "react-redux";
+import extractsysvars from "../helpers/getsystemvars";
+import { Link } from "react-router-dom";
 const SidebarMobile = () => {
+  let systemvarData = useSelector((store) => store.systemvar);
+  const contactemail = extractsysvars(systemvarData, "contactEmail");
+  const tagline = extractsysvars(systemvarData, "tagline");
   return (
     <div className="sidebar pl-4 pr-2 py-4">
       <Logo width="35" marginLeft="3%" />
@@ -11,13 +16,13 @@ const SidebarMobile = () => {
       </div>
       <div>
         <div className="p-2 mob-each-link">
-          <a>Home</a>
+          <Link to="/">Home</Link>
         </div>
         <div className="p-2 mob-each-link">
-          <a>Sign In</a>
+          <Link to="/customer/login">Sign In</Link>
         </div>
         <div className="p-2 mob-each-link">
-          <a>Sign Up</a>
+          <Link to="/customer/register">Sign Up</Link>
         </div>
         <div className="p-2 mob-each-link">
           <a>Merchants</a>
@@ -28,9 +33,9 @@ const SidebarMobile = () => {
       </div>
       <SocialLinks />
       <br></br>
-      <span className="sub-email">contact@jumga.com</span>
+      <span className="sub-email">{contactemail}</span>
       <br></br>
-      <span className="tagline"> The Best Price you can trust</span>
+      <span className="tagline"> {tagline}</span>
     </div>
   );
 };

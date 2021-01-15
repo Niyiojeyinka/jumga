@@ -26,6 +26,10 @@
   font-weight: 450;
   margin-left: 2%;
 }
+a {
+  color: #252525 !important;
+  font-size: 95%;
+}
 .menu-active {
   color: #252525 !important;
   font-weight: 450;

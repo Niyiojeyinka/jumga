@@ -16,8 +16,25 @@ import PaymentsPage from "./pages/userdashboard/paymentspage";
 import WishList from "./pages/wishlist";
 import MerchantDashboard from "./pages/merchant/dashboard";
 import RiderDashboard from "./pages/dispatchrider/dashboard";
-
+import request from "./helpers/request";
+import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import systemVariables from "./actions/systemvariables";
+import storecategories from "./actions/storecategories";
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(async () => {
+    //fetch data and dispatch
+    const sysvarres = await request("page/systemvars/all", "POST", {
+      names:
+        '["contactemail","address","featurelist","tagline","facebook","twitter","instagram","supportMobile"]',
+    });
+    //alert(sysvarres.status);
+    const catres = await request("products/categories", "GET");
+    dispatch(systemVariables(sysvarres));
+    dispatch(storecategories(catres));
+  });
   return (
     <Router>
       <Switch>
