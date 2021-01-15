@@ -10,12 +10,12 @@ import request from "../helpers/request";
 import storeslider from "../actions/storeslider";
 const HomePage = () => {
   const dispatch = useDispatch();
-  /*
+
   useEffect(async () => {
     //fetch data and dispatch
     const sliderresponse = await request("page/sliders", "GET");
-    dispatch(storeslider(sliderresponse));
-  });*/
+    dispatch(storeslider(sliderresponse.body?.data.sliders[0]));
+  });
 
   return (
     <>
