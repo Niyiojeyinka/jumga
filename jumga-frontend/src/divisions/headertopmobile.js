@@ -3,6 +3,7 @@ import * as React from "react";
 import SidebarMobile from "./sidebarmobile";
 const HeaderTopMobile = () => {
   const [displayMobileSidebar, setDisplayMobileSidebar] = React.useState(false);
+  const [icon, setIcon] = React.useState("fa-bars");
 
   const displaySidebar = displayMobileSidebar ? <SidebarMobile /> : <></>;
 
@@ -13,9 +14,14 @@ const HeaderTopMobile = () => {
 
         <i
           onClick={() => {
+            if (!displayMobileSidebar) {
+              setIcon("fa-close");
+            } else {
+              setIcon("fa-bars");
+            }
             setDisplayMobileSidebar(!displayMobileSidebar);
           }}
-          className="fa fa-bars"
+          className={"fa " + icon}
         ></i>
       </div>
       {displaySidebar}

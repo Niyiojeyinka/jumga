@@ -1,14 +1,14 @@
 import tv from "../assets/images/tv.jpg";
 const EachProductList = (props) => {
   const wishlist = props.showAddToWishlistBtn ? (
-    <button className="btn color-yellow mx-5">
+    <button className="btn color-yellow m-2">
       <i className="fa fa-heart text-white"></i>
     </button>
   ) : (
     <></>
   );
   return (
-    <div className="each-product-list  m-3">
+    <div className="each-product-list m-2">
       <div style={{ display: "inline" }}>
         <img
           src={
@@ -35,7 +35,7 @@ const EachProductList = (props) => {
         style={{ display: "none" }}
         className="container-fluid each-product-overlay p-3"
       >
-        <button className="btn color-yellow mx-5">
+        <button className="btn color-yellow m-3">
           <i className="fa fa-shopping-cart text-white"></i>
         </button>
         {wishlist}

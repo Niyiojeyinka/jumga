@@ -11,11 +11,13 @@ const ProductList = (props) => {
   });
 
   return (
-    <div className="card">
+    <div className="card py-2">
       <div className="px-4 py-3">
         <strong className="product-list-tile">{props.title}</strong>
       </div>
-      <div className="p-4">{productlist}</div>
+      <div className="">
+        <center>{productlist}</center>
+      </div>
     </div>
   );
 };

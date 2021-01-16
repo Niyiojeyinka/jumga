@@ -20,7 +20,7 @@ module.exports = {
         {
           name: faker.name.findName(),
           role: faker.name.jobTitle(),
-          review: faker.lorem.sentences(),
+          review: faker.lorem.sentence(),
           image: profileimg,
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -28,7 +28,7 @@ module.exports = {
         {
           name: faker.name.findName(),
           role: faker.name.jobTitle(),
-          review: faker.lorem.sentences(),
+          review: faker.lorem.sentence(),
           image: profileimg,
           createdAt: new Date(),
           updatedAt: new Date(),
