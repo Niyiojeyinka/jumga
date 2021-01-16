@@ -21,6 +21,10 @@ import { useDispatch } from "react-redux";
 import React, { useEffect } from "react";
 import systemVariables from "./actions/systemvariables";
 import storecategories from "./actions/storecategories";
+import storerecentproducts, {
+  storerandomproducts,
+} from "./actions/storeproducts";
+import storefrontreviews from "./actions/storefrontreviews";
 function App() {
   const dispatch = useDispatch();
 
@@ -28,10 +32,17 @@ function App() {
     //fetch data and dispatch
     const sysvarres = await request("page/systemvars/all", "POST", {
       names:
-        '["contactemail","address","featurelist","tagline","facebook","twitter","instagram","supportMobile"]',
+        '["contactemail","address","tagline","facebook","twitter","instagram","supportMobile"]',
     });
     //alert(sysvarres.status);
     const catres = await request("products/categories", "GET");
+    const recentproducts = await request("products/recents/9/0", "GET");
+    const randomproducts = await request("products/recents/9/10", "GET");
+    const frontrevs = await request("page/frontreviews", "GET");
+
+    dispatch(storefrontreviews(frontrevs.body.data.reviews));
+    dispatch(storerandomproducts(randomproducts.body?.data.products));
+    dispatch(storerecentproducts(recentproducts.body?.data.products));
     dispatch(systemVariables(sysvarres));
     dispatch(storecategories(catres));
   });

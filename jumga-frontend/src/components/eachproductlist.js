@@ -10,14 +10,24 @@ const EachProductList = (props) => {
   return (
     <div className="each-product-list  m-3">
       <div style={{ display: "inline" }}>
-        <img src={tv} width="30%" alt="product name" />
+        <img
+          src={
+            props.product.images[0] !== undefined
+              ? props.product["images"][0].slug
+              : "default"
+          }
+          width="30%"
+          alt={`${props.product.name} image`}
+        />
       </div>
       <div style={{ display: "inline-block" }}>
         <div className="py-2">
-          <small>lg tv 32lf510a- 32 Inch Television</small>
+          <small>{props.product.name}</small>
           <br></br>
           <br></br>
-          <strong className="product-list-tile-price">$50,000</strong>
+          <strong className="product-list-tile-price">
+            ${props.product.price}
+          </strong>
         </div>
       </div>
 

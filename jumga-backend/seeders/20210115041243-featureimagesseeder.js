@@ -14,13 +14,14 @@ module.exports = {
      */
 
     let Featureimages = [];
-    for (let i = 0; i < 150; i++) {
+    for (let i = 0; i < 50; i++) {
       let image = {
-        slug: faker.image.dataUri(),
-        ProductId: Math.floor(Math.random() * 10) + 1,
+        slug: faker.image.imageUrl(),
+        ProductId: i + 1, //Math.floor(Math.random() * 50) + 1,
         createdAt: new Date(),
         updatedAt: new Date(),
       };
+      Featureimages.push(image);
       Featureimages.push(image);
     }
 

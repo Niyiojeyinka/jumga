@@ -1,10 +1,11 @@
 import Review from "../components/review";
+import { useSelector } from "react-redux";
 const Reviews = () => {
-  return (
-    <div className="row">
-      <Review />
-      <Review />
-    </div>
-  );
+  const reviews = useSelector((store) => store.frontreviews);
+
+  const reviewsJSX = reviews.map((review, index) => (
+    <Review review={review} key={"r" + index} />
+  ));
+  return <div className="row">{reviewsJSX}</div>;
 };
 export default Reviews;

@@ -1,3 +1,6 @@
 export const SYSTEMVAR = "SYSTEMVAR";
 export const CATEGORIES = "CATEGORIES";
 export const SLIDER = "SLIDER";
+export const ADD_RECENT_PRODUCT = "ADD_RECENT_PRODUCT";
+export const ADD_RANDOM_PRODUCT = "ADD_RANDOM_PRODUCT";
+export const FRONTREVIEWS = "FRONTREVIEWS";

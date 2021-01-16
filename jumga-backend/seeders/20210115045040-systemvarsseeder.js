@@ -57,13 +57,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
-        {
-          name: "featurelist",
-          value:
-            '[{"text":"Checkboxes are used if you want the user to select any number of options from a list of preset options.","icon":"fa-user"},{"text":"Checkboxes are used if you want the user to select any number of options from a list of preset options.","icon":"fa-user"},{"text":"Checkboxes are used if you want the user to select any number of options from a list of preset options.","icon":"fa-user"}]',
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
+
         {
           name: "activationFee",
           value: 50,
