@@ -1,5 +1,5 @@
 const extractsysvars = (systemvarData, name) => {
-  return systemvarData.body?.data.systemvars[name] != undefined
+  return systemvarData.body?.data.systemvars[name] !== undefined
     ? systemvarData.body?.data.systemvars[name]
     : "";
 };
