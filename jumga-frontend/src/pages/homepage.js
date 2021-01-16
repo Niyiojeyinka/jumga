@@ -16,7 +16,7 @@ const HomePage = () => {
   useEffect(async () => {
     //fetch data and dispatch
     if (!loaded) {
-      setTimeout(() => setLoaded(true), 2000); // 10초 뒤에
+      setTimeout(() => setLoaded(true), 1000); // 10초 뒤에
     }
     const sliderresponse = await request("page/sliders", "GET");
     dispatch(storeslider(sliderresponse.body?.data.sliders[0]));

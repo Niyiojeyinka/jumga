@@ -6,6 +6,7 @@ import { products } from "./products";
 import { frontreviews } from "./frontreviews";
 import { cart } from "./cart";
 import { wishlist } from "./wishlist";
+import { auth } from "./auth";
 const allReducers = combineReducers({
   systemvar,
   categories,
@@ -14,6 +15,7 @@ const allReducers = combineReducers({
   frontreviews,
   cart,
   wishlist,
+  auth,
 });
 //using es6 objects feature
 export default allReducers;

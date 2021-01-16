@@ -71,10 +71,10 @@ function App() {
         <Route path="/orders">
           <OrdersPage />
         </Route>
-        <Route path="/register">
+        <Route path="/:type/register">
           <RegisterPage />
         </Route>
-        <Route path="/login">
+        <Route path="/:type/login">
           <LoginPage />
         </Route>
         <Route path="/">

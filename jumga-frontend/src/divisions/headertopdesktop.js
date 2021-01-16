@@ -21,10 +21,10 @@ const HeaderTopDesktop = () => {
         <SocialLinks />
         <span className="auth-line">
           <span className="sub-email">
-            <Link to="customer/login">Sign In</Link>
+            <Link to="/customer/login">Sign In</Link>
           </span>
           <span className="tagline">
-            <Link to="customer/register">Sign Up</Link>
+            <Link to="/customer/register">Sign Up</Link>
           </span>
         </span>
       </div>

@@ -2,20 +2,27 @@ import React from "react";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import allReducers from "./reducers";
-
+import ReactDOM, { render } from "react-dom";
+import { positions, Provider as RAProvider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
 const store = createStore(
   allReducers,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
+const options = {
+  timeout: 5000,
+  position: positions.BOTTOM_CENTER,
+};
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <RAProvider template={AlertTemplate} {...options}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </RAProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
