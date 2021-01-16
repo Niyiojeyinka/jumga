@@ -12,11 +12,11 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-
+    let images = ["public/products/tv.jpg", "public/products/mob.jpg"];
     let Featureimages = [];
     for (let i = 0; i < 50; i++) {
       let image = {
-        slug: faker.image.imageUrl(),
+        slug: images[Math.floor(Math.random() * 2)],
         ProductId: i + 1, //Math.floor(Math.random() * 50) + 1,
         createdAt: new Date(),
         updatedAt: new Date(),
