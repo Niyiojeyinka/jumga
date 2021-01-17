@@ -5,8 +5,12 @@ const CartLoveCount = () => {
   const wishlist = useSelector((store) => store.wishlist);
 
   let totalAmount = 0.0;
+  let cartno = 0;
   for (let i = 0; i < cart.products.length; i++) {
-    totalAmount = totalAmount + parseFloat(cart.products[i].price);
+    totalAmount =
+      totalAmount +
+      parseFloat(cart.products[i].price) * parseInt(cart.products[i].count);
+    cartno += parseInt(cart.products[i].count);
   }
 
   return (
@@ -20,7 +24,7 @@ const CartLoveCount = () => {
         </span>
         <span className="badge-container">
           <span className="badge badge-warning text-white pbadge">
-            {cart.products.length}
+            {cartno}
           </span>
           <i className="fa fa-shopping-cart badge-icon"></i>
         </span>

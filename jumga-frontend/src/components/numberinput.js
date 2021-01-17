@@ -3,7 +3,7 @@ import { useAlert } from "react-alert";
 
 const NumberInput = (props) => {
   const alert = useAlert();
-  const [inputValue, setInputValue] = React.useState(1);
+  const [inputValue, setInputValue] = React.useState(0);
   const max = props.max;
   const convert = (value) => {
     return parseInt(value) ? value : false;

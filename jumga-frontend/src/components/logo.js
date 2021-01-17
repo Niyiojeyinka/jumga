@@ -1,9 +1,8 @@
 import logo from "../assets/images/logo1.png";
-
+import { Link } from "react-router-dom";
 const Logo = (props) => {
   return (
-    <a href="/">
-      {" "}
+    <Link to="/">
       <div
         style={{
           marginLeft: props.marginLeft,
@@ -21,7 +20,7 @@ const Logo = (props) => {
           JUMGA
         </strong>
       </div>
-    </a>
+    </Link>
   );
 };
 

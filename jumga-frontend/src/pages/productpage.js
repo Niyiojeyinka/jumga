@@ -11,12 +11,14 @@ import { useEffect, useState } from "react";
 import { BACKEND_BASE_URL } from "../helpers/constant";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import WishlistToggle from "../components/wishlisttoggle";
+import CartToggle from "../components/carttoggle";
 const ProductPage = () => {
   const products = useSelector((store) => store.products);
   const [imageToShow, setImageToShow] = useState(defaultImage);
   const [product, setProduct] = useState({});
   const [imagesJSX, setImagesJSX] = useState(<></>);
   const { id } = useParams();
+  const [quantity, setQuantity] = useState(0);
 
   useEffect(async () => {
     const response = await request("products/" + id, "GET");
@@ -59,16 +61,19 @@ const ProductPage = () => {
           </div>
           <div className="col-sm-12 col-md-3 col-lg-3 col-xl-3 feature-image-nav">
             {imagesJSX}
+            <div className="m-2">
+              <b>${product.price}</b>
+            </div>
+
             <div>
               <NumberInput
                 max={product.in_stock}
                 getValue={(value) => {
-                  console.log(value);
+                  setQuantity(value);
                 }}
               />
-              <button className="btn color-yellow text-white m-2">
-                Add to Cart
-              </button>
+              <CartToggle quantity={quantity} product={product} />
+
               <WishlistToggle product={product} />
             </div>
           </div>

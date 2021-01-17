@@ -9,17 +9,21 @@ import { useState } from "react";
 import addtowishlist from "../actions/storewishlist";
 import addtocart from "../actions/storecart";
 import { Link } from "react-router-dom";
+import addToCartArray from "../helpers/addtocart";
+
 const EachProductList = (props) => {
   const auth = useSelector((store) => store.auth);
   const alert = useAlert();
   const [redirectTo, setRedirectTo] = useState("");
   const dispatch = useDispatch();
+  const cart = useSelector((store) => store.cart);
+  let products = cart.products;
 
-  const addToCart = (product) => {
-    dispatch(addtocart(product));
-    alert.success("added to cart!");
+  const addToCart = (product, products, quantity) => {
+    const newProducts = addToCartArray(product, products, quantity, true);
+    dispatch(addtocart(newProducts));
+    alert.success("product(s) added to cart!");
   };
-
   const addToWishlist = (product) => {
     if (auth.loggedIn) {
       dispatch(addtowishlist(product));
@@ -91,7 +95,7 @@ const EachProductList = (props) => {
           >
             <button
               onClick={() => {
-                addToCart(props.product);
+                addToCart(props.product, products, 1);
               }}
               className="btn color-yellow m-3"
             >
