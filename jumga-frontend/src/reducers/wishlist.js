@@ -5,7 +5,7 @@ export const wishlist = (state = initialState, action) => {
     case actions.ADD_TO_WISHLIST:
       return { products: [action.payload, ...state.products] };
     case actions.REMOVE_FROM_WISHLIST:
-      return { products: [action.payload, ...state.products] };
+      return { products: [...action.payload] };
     default:
       return state;
   }

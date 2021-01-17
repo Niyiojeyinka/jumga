@@ -1,6 +1,8 @@
 import * as React from "react";
+import { useAlert } from "react-alert";
 
 const NumberInput = (props) => {
+  const alert = useAlert();
   const [inputValue, setInputValue] = React.useState(1);
   const max = props.max;
   const convert = (value) => {
@@ -13,7 +15,10 @@ const NumberInput = (props) => {
   };
 
   const handleChange = (e) => {
-    if (convert(e.target.value)) {
+    if (props.max < e.target.value) {
+      saveChange(props.max);
+      alert.error("The max order is " + props.max);
+    } else if (convert(e.target.value)) {
       saveChange(e.target.value);
     } else {
       saveChange(1);

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import tv from "../assets/images/tv.jpg";
+import defaultImage from "../assets/images/default-product.png";
 import { BACKEND_BASE_URL } from "../helpers/constant";
 import { useAlert } from "react-alert";
 import { confirmAlert } from "react-confirm-alert"; // Import
@@ -68,7 +68,7 @@ const EachProductList = (props) => {
               src={
                 props.product.images[0] !== undefined
                   ? BACKEND_BASE_URL + "" + props.product["images"][0].slug
-                  : "default"
+                  : defaultImage
               }
               width="30%"
               alt={`${props.product.name} image`}

@@ -90,7 +90,7 @@ exports.getProduct = async (req, res) => {
       where: {
         id: parseInt(req.params.id),
       },
-      include: ["category"],
+      include: ["category", "images"],
     });
 
     return res.status(200).json({

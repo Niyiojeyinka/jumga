@@ -5,7 +5,7 @@ export const cart = (state = initialState, action) => {
     case actions.ADD_TO_CART:
       return { products: [action.payload, ...state.products] };
     case actions.REMOVE_FROM_CART:
-      return { products: [action.payload, ...state.products] };
+      return { products: [...action.payload] };
     default:
       return state;
   }
