@@ -10,6 +10,8 @@ import HomePage from "./pages/homepage";
 import ProductPage from "./pages/productpage";
 import RegisterPage from "./pages/registerpage";
 import LoginPage from "./pages/loginpage";
+import ForgetPassword from "./pages/forgotpassword";
+import ResetPassword from "./pages/resetpassword";
 import ContactPage from "./pages/contactpage";
 import OrdersPage from "./pages/userdashboard/orderspage";
 import PaymentsPage from "./pages/userdashboard/paymentspage";
@@ -26,6 +28,7 @@ import storerecentproducts, {
 } from "./actions/storeproducts";
 import storefrontreviews from "./actions/storefrontreviews";
 import ScrollToTop from "./components/scrolltotop";
+import Dashboard from "./pages/dashboard";
 function App() {
   const dispatch = useDispatch();
 
@@ -64,7 +67,7 @@ function App() {
             )}
           />
 
-          <Route path="/wishlist">
+          <Route path="/customer/wishlist">
             <WishList />
           </Route>
           <Route path="/contact">
@@ -76,8 +79,17 @@ function App() {
           <Route path="/orders">
             <OrdersPage />
           </Route>
+          <Route path="/:type/dashboard">
+            <Dashboard />
+          </Route>
           <Route path="/:type/register">
             <RegisterPage />
+          </Route>
+          <Route path="/:type/forgot">
+            <ForgetPassword />
+          </Route>
+          <Route path="/:type/reset/:token">
+            <ResetPassword />
           </Route>
           <Route path="/:type/login">
             <LoginPage />

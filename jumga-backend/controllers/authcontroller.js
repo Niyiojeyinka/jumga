@@ -14,6 +14,9 @@ const mail = require("../helpers/mail");
  */
 exports.register = async (req, res) => {
   try {
+    if (!mail.validateEmail(req.body.email)) {
+      throw new Error("Email not Valid");
+    }
     const checkUser = await db.User.findOne({
       where: {
         email: req.body.email,
@@ -100,7 +103,10 @@ exports.register = async (req, res) => {
  */
 exports.login = async (req, res) => {
   try {
-    const user = await db.User.findOne({
+    if (!req.body.email || !req.body.password) {
+      throw new Error("Both Password and Email are required.");
+    }
+    let user = await db.User.findOne({
       where: {
         email: req.body.email,
       },
@@ -113,7 +119,7 @@ exports.login = async (req, res) => {
     const valid = await bcrypt.compare(req.body.password, user.password);
 
     if (!valid) {
-      throw new Error("Incorrec Password");
+      throw new Error("Incorrect Password/Email");
     } else {
       const token = jwt.sign({ userId: user.id }, "RANDOM_KEY", {
         expiresIn: "24h",
@@ -122,7 +128,12 @@ exports.login = async (req, res) => {
         result: 1,
         message: "Signed in Successfuly",
         data: {
-          userId: user.id,
+          user: {
+            email: user.email,
+            name: user.name,
+            id: user.id,
+            country_code: user.country_code,
+          },
           token: token,
         },
         error: [],
@@ -131,7 +142,7 @@ exports.login = async (req, res) => {
   } catch (e) {
     return res.status(401).json({
       result: 0,
-      error: e,
+      error: e.toString(),
       data: [],
     });
   }
@@ -172,7 +183,7 @@ exports.requestToken = async (req, res) => {
       {
         name: user.name,
         title: "JUMGA Password Recovery",
-        url: req.body.url + "/" + token,
+        url: "http://" + req.body.url + "/" + token,
       },
       "requesttoken",
       function (error, resp) {
@@ -213,7 +224,7 @@ exports.changepassword = async (req, res) => {
     });
 
     if (!user) {
-      throw new Error("Token now not valid");
+      throw new Error("Token not valid or Expired");
     }
 
     bcrypt.hash(req.body.password, 10).then(async (hash) => {
@@ -260,7 +271,7 @@ exports.changepassword = async (req, res) => {
   } catch (e) {
     return res.status(400).json({
       result: 0,
-      error: e,
+      error: e.toString(),
       data: [],
     });
   }

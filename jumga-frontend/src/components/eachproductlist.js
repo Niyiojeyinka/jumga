@@ -58,7 +58,14 @@ const EachProductList = (props) => {
       <i className="fa fa-heart text-white"></i>
     </button>
   ) : (
-    <></>
+    <button
+      onClick={() => {
+        addToWishlist(props.product);
+      }}
+      className="btn color-yellow m-2"
+    >
+      <i className="fa fa-bin text-white"></i>
+    </button>
   );
 
   if (redirectTo == "") {

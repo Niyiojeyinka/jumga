@@ -1,30 +1,28 @@
 import EmptyTemplate from "./empttemplate";
-import { useParams, Link, Redirect } from "react-router-dom";
+import { useParams, Redirect } from "react-router-dom";
 import { useState } from "react";
 import request from "../helpers/request";
 import { useAlert } from "react-alert";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
-import { useDispatch, useSelector } from "react-redux";
-import storeauth from "../actions/auth";
-const LoginPage = () => {
-  const [loginData, setLoginData] = useState({});
+
+const ResetPassword = () => {
+  const [resetData, setResetData] = useState({});
   const [loadingBtn, setLoadingBtn] = useState(false);
-  const { type } = useParams();
-  const auth = useSelector((store) => store.auth);
+  const { type, token } = useParams();
   const alert = useAlert();
   const [redirectTo, setRedirectTo] = useState("");
-  const dispatch = useDispatch();
-
   const handleSubmit = async (e) => {
-    if (!loginData.email || !loginData.password) {
-      alert.error("All fields are required");
+    if (resetData.cpassword != resetData.password) {
+      alert.show("Password not same as confirmation");
       return;
     }
+
     e.target.setAttribute("disabled", "");
     setLoadingBtn(true);
-    const response = await request("auth/signin", "POST", {
-      email: loginData.email,
-      password: loginData.password,
+
+    const response = await request("auth/changepassword", "POST", {
+      token,
+      password: resetData.password,
     });
     if (response.status != 200) {
       //error occurred
@@ -32,53 +30,49 @@ const LoginPage = () => {
       setLoadingBtn(false);
       alert.error(response.body.error);
     } else {
-      //redirect back to dashboard
+      //redirect back to sign
       alert.success(response.body.message);
-      dispatch(
-        storeauth({
-          user: response.body.data.user,
-          token: response.body.data.token,
-          userType: type,
-          loggeIn: true,
-        })
-      );
       setLoadingBtn(false);
-      setRedirectTo(`/${type}/dashboard`);
+      setRedirectTo(`/${type}/login`);
     }
   };
+
+  const handleChange = (e) => {
+    const data = {};
+    data[e.target.name] = e.target.value;
+
+    setResetData({ ...resetData, ...data });
+  };
+
   const loadingIcon = loadingBtn ? (
     <i className="fa fa-circle-o-notch spin text-white"></i>
   ) : (
     <></>
   );
-  const handleChange = (e) => {
-    const data = {};
-    data[e.target.name] = e.target.value;
-    setLoginData({ ...loginData, ...data });
-  };
-  if (redirectTo == "" || !auth.loggeIn) {
+  if (redirectTo == "") {
     return (
       <EmptyTemplate>
         <div className="row w-100 card py-3 px-4">
-          <b className="text-yellow action-text">Sign in to start shopping!</b>
+          <b classNameName="text-yellow action-text">reset your password!</b>
           <br></br>
           <br></br>
           <div className="col-lg-4 mx-auto">
             <div className="auto-form-wrapper">
               <br></br>
+
               <div className="form-group">
-                <label className="label">Email Address</label>
+                <label className="label">Password</label>
                 <div className="input-group">
                   <input
+                    name="password"
+                    type="password"
                     onChange={handleChange}
-                    name="email"
-                    type="text"
                     className="form-control"
-                    placeholder="Email Address"
+                    placeholder="*********"
                   />
                   <div className="input-group-append">
                     <span className="input-group-text">
-                      <i className="fa fa-envelope"></i>
+                      <i className="fa fa-key"></i>
                     </span>
                   </div>
                 </div>
@@ -87,9 +81,9 @@ const LoginPage = () => {
                 <label className="label">Password</label>
                 <div className="input-group">
                   <input
-                    onChange={handleChange}
-                    name="password"
+                    name="cpassword"
                     type="password"
+                    onChange={handleChange}
                     className="form-control"
                     placeholder="*********"
                   />
@@ -103,30 +97,10 @@ const LoginPage = () => {
               <div className="form-group">
                 <button
                   onClick={handleSubmit}
-                  className="btn color-yellow text-white submit-btn btn-block"
+                  className="btn color-yellow text-white submit-btn my-2 btn-block"
                 >
-                  Login {loadingIcon}
+                  Reset Password {loadingIcon}
                 </button>
-              </div>
-              <div className="form-group d-flex justify-content-between col-form-label">
-                Problem signing in?
-                <Link
-                  to={"/" + type + "/forgot"}
-                  className="col-form-label text-yellow"
-                >
-                  Forgot Password
-                </Link>
-              </div>
-              <div className="text-block text-center my-3 col-form-label">
-                <span className="text-small col-form-label font-weight-semibold">
-                  Not a member ?
-                </span>
-                <Link
-                  to={"/" + type + "/register"}
-                  className="col-form-label text-yellow"
-                >
-                  Create new account
-                </Link>
               </div>
             </div>
           </div>
@@ -137,4 +111,4 @@ const LoginPage = () => {
     return <Redirect to={redirectTo} />;
   }
 };
-export default LoginPage;
+export default ResetPassword;

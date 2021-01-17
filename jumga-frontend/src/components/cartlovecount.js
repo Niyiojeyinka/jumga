@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-
+import { Link } from "react-router-dom";
 const CartLoveCount = () => {
   const cart = useSelector((store) => store.cart);
   const wishlist = useSelector((store) => store.wishlist);
@@ -16,12 +16,14 @@ const CartLoveCount = () => {
   return (
     <span className="">
       <span className="social-line">
-        <span className="badge-container">
-          <span className="badge badge-warning text-white pbadge">
-            {wishlist.products.length}
+        <Link to="/customer/wishlist">
+          <span className="badge-container">
+            <span className="badge badge-warning text-white pbadge">
+              {wishlist.products.length}
+            </span>
+            <i className="fa fa-heart badge-icon"></i>
           </span>
-          <i className="fa fa-heart badge-icon"></i>
-        </span>
+        </Link>
         <span className="badge-container">
           <span className="badge badge-warning text-white pbadge">
             {cartno}
