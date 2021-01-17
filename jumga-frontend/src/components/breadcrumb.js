@@ -1,4 +1,4 @@
-const Breadcrumb = () => {
+const Breadcrumb = (props) => {
   return (
     <div class="btn-group btn-breadcrumb">
       <a href="#" class="btn btn-default">
@@ -8,10 +8,10 @@ const Breadcrumb = () => {
         Products
       </a>
       <a href="#" class="btn btn-default">
-        Computers
+        {props.category}
       </a>
       <a href="#" class="btn btn-default">
-        Macbook PRO m1
+        {props.name}
       </a>
     </div>
   );

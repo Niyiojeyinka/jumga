@@ -4,6 +4,11 @@ const CartLoveCount = () => {
   const cart = useSelector((store) => store.cart);
   const wishlist = useSelector((store) => store.wishlist);
 
+  let totalAmount = 0.0;
+  for (let i = 0; i < cart.products.length; i++) {
+    totalAmount = totalAmount + parseFloat(cart.products[i].price);
+  }
+
   return (
     <span className="">
       <span className="social-line">
@@ -21,7 +26,7 @@ const CartLoveCount = () => {
         </span>
       </span>
       <i>Total :</i>
-      <strong className="">$16,000</strong>
+      <strong className="">${totalAmount}</strong>
     </span>
   );
 };

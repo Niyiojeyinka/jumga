@@ -56,7 +56,7 @@ function App() {
         <Route path="/merchant/dashboard">
           <MerchantDashboard />
         </Route>
-        <Route path="/product/page">
+        <Route path="/product/:id/:title">
           <ProductPage />
         </Route>
         <Route path="/wishlist">

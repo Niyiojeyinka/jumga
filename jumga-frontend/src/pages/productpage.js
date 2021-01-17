@@ -4,18 +4,26 @@ import Header from "../divisions/header";
 import TV from "../assets/images/tv.jpg";
 import Breadcrumb from "../components/breadcrumb";
 import NumberInput from "../components/numberinput";
-import { useDispatch } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import request from "../helpers/request";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 const ProductPage = () => {
+  const [product, setProduct] = useState({});
+  const { id } = useParams();
+  useEffect(async () => {
+    const response = await request("products/" + id, "GET");
+    const prdt = response.body.data?.product;
+    setProduct(prdt);
+  }, []);
+
   return (
     <>
       <Header>
         <div className="">
-          <Breadcrumb />
+          <Breadcrumb category={"computers"} name={product?.name} />
           <br></br>
-          <strong className="product-name">
-            All in one disinfectant spray - 400ml 2020.
-          </strong>
+          <strong className="product-name">{product?.name}</strong>
         </div>
         <div className="row">
           <div className="col-sm-12 col-md-9 col-lg-9 col-xl-9">
@@ -45,43 +53,31 @@ const ProductPage = () => {
       <section className="row">
         <div className="col-sm-12 col-md-3 col-lg-3 col-xl-3 p-5 predefined-desc">
           <div>
-            <strong>SKU</strong> : <i></i>
+            <strong>SKU</strong> :
+            <i>{product.sku != null ? product.sku : "---"}</i>
           </div>
           <div>
-            <strong>Model</strong> : <i></i>
+            <strong>Model</strong> :
+            <i>{product.model != null ? product.model : "---"}</i>
           </div>
           <div>
-            <strong>Color</strong> : <i></i>
+            <strong>Color</strong> :
+            <i>{product.color != null ? product.color : "---"}</i>
           </div>
           <div>
-            <strong>Weight</strong> : <i></i>
+            <strong>Weight</strong> :
+            <i>{product.weight != null ? product.weight : "---"}</i>
           </div>
         </div>
         <div className="col-sm-12 col-md-9 col-lg-9 col-xl-9 py-1 px-5 product-description">
           <b className="desc">Description</b>
           <br></br>
           <article>
-            FeaturesApple-designed M1 chip for a giant leap in CPU, GPU, and
-            machine learning performanceGet more done with up to 20 hours of
-            battery life, the longest ever in a Mac²8-core CPU delivers up to
-            2.8x faster performance to fly through workflows quicker than
-            ever¹8-core GPU with up to 5x faster graphics for graphics-intensive
-            apps and games¹16-core Neural Engine for advanced machine
-            learning8GB of unified memory so everything you do is fast and
-            fluidSuperfast SSD storage launches apps and opens files in an
-            instantActive cooling system sustains incredible
-            performance13.3-inch Retina display with 500 nits of brightness for
-            vibrant colors and incredible image detail³FaceTime HD camera with
-            advanced image signal processor for clearer, sharper video
-            callsStudio-quality three-microphone array captures your voice more
-            clearlyNext-generation Wi-Fi 6 for faster connectivityTwo
-            Thunderbolt / USB 4 ports for charging and accessoriesBacklit Magic
-            Keyboard with Touch Bar and Touch ID for secure unlock and
-            paymentsmacOS Big Sur with a bold new design and major app updates
-            for Safari, Messages, and Maps¹ Compared with previous generation.²
-            Battery life varies by use and configuration. See
-            apple.com/batteries for more information.³ Display size is measured
-            diagonally.
+            <div
+              dangerouslySetInnerHTML={{
+                __html: product?.description,
+              }}
+            />
           </article>
         </div>
       </section>
