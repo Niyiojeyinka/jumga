@@ -31,15 +31,23 @@ function applyExtraSetup(sequelize) {
   User.hasMany(Order);
   User.hasMany(Address);
   User.hasMany(Cart);
-  Category.hasMany(Product);
+  Category.hasMany(Product, {
+    foreignKey: "CategoryId",
+    as: "products",
+  });
+
+  Product.belongsTo(Category, {
+    foreignKey: "CategoryId",
+    as: "category",
+  });
   Product.hasMany(Featureimage, {
     foreignKey: "ProductId",
     as: "images",
   });
-  Featureimage.belongsTo(Product, {
+  /*Featureimage.belongsTo(Product, {
     foreignKey: "id",
     as: "product",
-  });
+  });*/
   User.hasOne(Withdrawalsetting);
   User.hasOne(Account);
   User.hasMany(Withdrawal, {

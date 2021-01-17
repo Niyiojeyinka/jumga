@@ -1,4 +1,5 @@
 "use strict";
+const { fake } = require("faker");
 const faker = require("faker");
 
 module.exports = {
@@ -23,10 +24,14 @@ module.exports = {
           faker.lorem.paragraphs() +
           "<br><br>" +
           faker.lorem.paragraphs(),
-        CategoryId: Math.floor(Math.random() * 10) + 1,
+        CategoryId: Math.floor(Math.random() * 9) + 1,
         MerchantId: 1,
-        in_stock: Math.floor(Math.random() * 10) + 1,
+        in_stock: Math.floor(Math.random() * 9) + 1,
         price: faker.commerce.price(),
+        sku: faker.random.uuid(),
+        model: faker.vehicle.model(),
+        weight: Math.floor(Math.random() * 10) + "kg",
+        color: faker.commerce.color(),
         createdAt: new Date(),
         updatedAt: new Date(),
       };

@@ -9,6 +9,10 @@ exports.addProduct = async (req, res) => {
       CategoryId: req.body.category_id,
       in_stock: req.body.in_stock,
       price: req.body.price,
+      sku: req.body.sku ? req.body.sku : null,
+      color: req.body.color ? req.body.color : null,
+      weight: req.body.weight ? req.body.weight : null,
+      model: req.body.model ? req.body.model : null,
       status: req.body.status,
     });
 
@@ -83,7 +87,10 @@ exports.deleteProduct = async (req, res) => {
 exports.getProduct = async (req, res) => {
   try {
     const product = await db.Product.findOne({
-      id: req.params.id,
+      where: {
+        id: parseInt(req.params.id),
+      },
+      include: ["category"],
     });
 
     return res.status(200).json({
