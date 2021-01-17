@@ -25,7 +25,7 @@ import storerecentproducts, {
   storerandomproducts,
 } from "./actions/storeproducts";
 import storefrontreviews from "./actions/storefrontreviews";
-
+import ScrollToTop from "./components/scrolltotop";
 function App() {
   const dispatch = useDispatch();
 
@@ -49,38 +49,44 @@ function App() {
   });
   return (
     <Router>
-      <Switch>
-        <Route path="/rider/dashboard">
-          <RiderDashboard />
-        </Route>
-        <Route path="/merchant/dashboard">
-          <MerchantDashboard />
-        </Route>
-        <Route path="/product/:id/:title">
-          <ProductPage />
-        </Route>
-        <Route path="/wishlist">
-          <WishList />
-        </Route>
-        <Route path="/contact">
-          <ContactPage />
-        </Route>
-        <Route path="/payments">
-          <PaymentsPage />
-        </Route>
-        <Route path="/orders">
-          <OrdersPage />
-        </Route>
-        <Route path="/:type/register">
-          <RegisterPage />
-        </Route>
-        <Route path="/:type/login">
-          <LoginPage />
-        </Route>
-        <Route path="/">
-          <HomePage />
-        </Route>
-      </Switch>
+      <ScrollToTop>
+        <Switch>
+          <Route path="/rider/dashboard">
+            <RiderDashboard />
+          </Route>
+          <Route path="/merchant/dashboard">
+            <MerchantDashboard />
+          </Route>
+          <Route
+            path="/product/:id/:title"
+            component={(props) => (
+              <ProductPage {...props} key={window.location.pathname} />
+            )}
+          />
+
+          <Route path="/wishlist">
+            <WishList />
+          </Route>
+          <Route path="/contact">
+            <ContactPage />
+          </Route>
+          <Route path="/payments">
+            <PaymentsPage />
+          </Route>
+          <Route path="/orders">
+            <OrdersPage />
+          </Route>
+          <Route path="/:type/register">
+            <RegisterPage />
+          </Route>
+          <Route path="/:type/login">
+            <LoginPage />
+          </Route>
+          <Route path="/">
+            <HomePage />
+          </Route>
+        </Switch>
+      </ScrollToTop>
     </Router>
   );
 }

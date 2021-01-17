@@ -4,31 +4,20 @@ import Header from "../divisions/header";
 import defaultImage from "../assets/images/default-product.png";
 import Breadcrumb from "../components/breadcrumb";
 import NumberInput from "../components/numberinput";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import request from "../helpers/request";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { BACKEND_BASE_URL } from "../helpers/constant";
-import { useAlert } from "react-alert";
-import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
-import { Redirect } from "react-router-dom";
-import addtowishlist from "../actions/storewishlist";
-import addtocart from "../actions/storecart";
 import WishlistToggle from "../components/wishlisttoggle";
 const ProductPage = () => {
   const products = useSelector((store) => store.products);
   const [imageToShow, setImageToShow] = useState(defaultImage);
-  const [defaultImg, setDefaultImg] = useState(true);
   const [product, setProduct] = useState({});
   const [imagesJSX, setImagesJSX] = useState(<></>);
   const { id } = useParams();
-  /*
-  const auth = useSelector((store) => store.auth);
-  const alert = useAlert();
-  const [redirectTo, setRedirectTo] = useState("");
-  const dispatch = useDispatch();
-*/
+
   useEffect(async () => {
     const response = await request("products/" + id, "GET");
     const prdt = response.body.data?.product;
@@ -39,7 +28,6 @@ const ProductPage = () => {
     );
     setProduct(prdt);
     if (prdt.images[0]?.slug) {
-      setDefaultImg(false);
       const holdImagesJSX = prdt.images.map((productImg, index) => {
         console.log("hey");
         return (
@@ -56,30 +44,7 @@ const ProductPage = () => {
       setImagesJSX(holdImagesJSX);
     }
   }, []);
-  /*
-  const addToWishlist = (product) => {
-    if (auth.loggedIn) {
-      dispatch(addtowishlist(product));
-      alert.success("added to wishlist!");
-    } else {
-      //redirect to login
-      alert.show("You need to sign in first!");
-      confirmAlert({
-        title: "You need to sign in first!",
-        message: "Please sign in or rgister.",
-        buttons: [
-          {
-            label: "Register",
-            onClick: () => setRedirectTo("/customer/register"),
-          },
-          {
-            label: "Sign in",
-            onClick: () => setRedirectTo("/customer/login"),
-          },
-        ],
-      });
-    }
-  };*/
+
   return (
     <>
       <Header>
