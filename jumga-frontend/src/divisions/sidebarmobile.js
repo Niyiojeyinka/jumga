@@ -4,15 +4,22 @@ import Logo from "../components/logo";
 import { useSelector } from "react-redux";
 import extractsysvars from "../helpers/getsystemvars";
 import { Link } from "react-router-dom";
+import Signout from "../components/signout";
+
 const SidebarMobile = () => {
   let systemvarData = useSelector((store) => store.systemvar);
   const contactemail = extractsysvars(systemvarData, "contactEmail");
   const tagline = extractsysvars(systemvarData, "tagline");
   const auth = useSelector((store) => store.auth);
   const topAuthJSX = auth.loggedIn ? (
-    <div className="p-2 mob-each-link">
-      <Link to={`/${auth.userType}/dashboard`}>Dashboard</Link>
-    </div>
+    <>
+      <div className="p-2 mob-each-link">
+        <Link to={`/${auth.userType}/dashboard`}>Dashboard</Link>
+      </div>
+      <div className="p-2 mob-each-link">
+        <Signout />
+      </div>
+    </>
   ) : (
     <>
       <div className="p-2 mob-each-link">

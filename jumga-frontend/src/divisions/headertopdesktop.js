@@ -5,6 +5,7 @@ import SocialLinks from "../components/sociallinks";
 import { useSelector } from "react-redux";
 import extractsysvars from "../helpers/getsystemvars";
 import { Link } from "react-router-dom";
+import Signout from "../components/signout";
 const HeaderTopDesktop = () => {
   let systemvarData = useSelector((store) => store.systemvar);
   const contactemail = extractsysvars(systemvarData, "contactEmail");
@@ -14,6 +15,7 @@ const HeaderTopDesktop = () => {
   const topAuthJSX = auth.loggedIn ? (
     <span className="tagline">
       <Link to={`/${auth.userType}/dashboard`}>Dashboard</Link>
+      <Signout />
     </span>
   ) : (
     <>

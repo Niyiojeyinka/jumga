@@ -6,6 +6,8 @@ import { useAlert } from "react-alert";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { useDispatch, useSelector } from "react-redux";
 import storeauth from "../actions/auth";
+import Cookies from "universal-cookie";
+
 const LoginPage = () => {
   const [loginData, setLoginData] = useState({});
   const [loadingBtn, setLoadingBtn] = useState(false);
@@ -14,6 +16,7 @@ const LoginPage = () => {
   const alert = useAlert();
   const [redirectTo, setRedirectTo] = useState("");
   const dispatch = useDispatch();
+  const cookies = new Cookies();
 
   const handleSubmit = async (e) => {
     if (!loginData.email || !loginData.password) {
@@ -33,15 +36,16 @@ const LoginPage = () => {
       alert.error(response.body.error);
     } else {
       //redirect back to dashboard
+      const authData = {
+        user: response.body.data.user,
+        token: response.body.data.token,
+        userType: type,
+        loggedIn: true,
+      };
+      dispatch(storeauth(authData));
+      cookies.set("auth", JSON.stringify(authData), { path: "/" });
       alert.success(response.body.message);
-      dispatch(
-        storeauth({
-          user: response.body.data.user,
-          token: response.body.data.token,
-          userType: type,
-          loggedIn: true,
-        })
-      );
+
       setLoadingBtn(false);
       setRedirectTo(`/`);
     }

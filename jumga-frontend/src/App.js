@@ -32,9 +32,11 @@ import Dashboard from "./pages/dashboard";
 import TestPage from "./pages/test";
 import CategoryPage from "./pages/categorypage";
 import CartPage from "./pages/cartpage";
+import Cookies from "universal-cookie";
+import auth from "./actions/auth";
 function App() {
   const dispatch = useDispatch();
-
+  const cookies = new Cookies();
   useEffect(async () => {
     //fetch data and dispatch
     const sysvarres = await request("page/systemvars/all", "POST", {
@@ -52,6 +54,11 @@ function App() {
     dispatch(storerecentproducts(recentproducts.body?.data.products));
     dispatch(systemVariables(sysvarres));
     dispatch(storecategories(catres));
+    //get auth from cookies
+    const cookieauth = cookies.get("auth");
+    if (cookieauth) {
+      dispatch(auth(cookieauth));
+    }
   });
   return (
     <Router>
@@ -99,9 +106,13 @@ function App() {
           <Route path="/:type/reset/:token">
             <ResetPassword />
           </Route>
-          <Route path="/:type/login">
-            <LoginPage />
-          </Route>
+          <Route
+            path="/:type/login"
+            component={(props) => (
+              <LoginPage {...props} key={window.location.pathname} />
+            )}
+          />
+
           <Route path="/">
             <HomePage />
           </Route>
