@@ -64,7 +64,6 @@ const ProductPage = () => {
             <div className="m-2">
               <b>${product.price}</b>
             </div>
-
             <div>
               <NumberInput
                 max={product.in_stock}
@@ -72,6 +71,8 @@ const ProductPage = () => {
                   setQuantity(value);
                 }}
               />
+            </div>
+            <div>
               <CartToggle quantity={quantity} product={product} />
 
               <WishlistToggle product={product} />

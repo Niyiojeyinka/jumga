@@ -1,6 +1,7 @@
 import Benefits from "../divisions/benefits";
 import Reviews from "../divisions/reviews";
 import ProductList from "../divisions/productslist";
+import ProductListing from "../divisions/productlisting";
 import Footer from "../divisions/footer";
 import Header from "../divisions/header";
 import Slider from "../components/slider";
@@ -37,7 +38,7 @@ const HomePage = () => {
       </section>
       <Benefits />
       <section className="p-5">
-        <ProductList
+        <ProductListing
           products={products.random}
           showAddToWishlistBtn={true}
           title="Top Products"

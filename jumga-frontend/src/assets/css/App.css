@@ -106,37 +106,25 @@ a {
     max-width: 30%;
     display: inline-block;
     position: relative;
-    cursor: pointer;
   }
   .mobile-header {
     display: none !important;
+  }
+  .cartlovecount {
+    margin-left: -10% !important;
   }
 }
 @media screen and (max-width: 600px) {
   .each-product-list {
     max-width: 100%;
     position: relative;
-    cursor: pointer;
     height: 120px;
   }
   .desk-header {
     display: none !important;
   }
 }
-.each-product-overlay {
-  position: absolute;
-  top: 0;
-  background: rgba(240, 248, 255, 0.6);
-  height: 120px;
-}
-.each-product-list:hover .each-product-overlay {
-  display: block !important;
-}
 
-.each-product-overlay button.right {
-  position: absolute;
-  /*right: 3%;*/
-}
 .each-product-list:hover {
   border: 1px solid #d3d3d3;
 }
@@ -274,13 +262,26 @@ a {
   height: 40px;
 }
 
-.num-container-btn .left,
-.right {
-  margin-top: -3px;
+.num-container-btn {
+  position: relative;
+}
+
+.num-container-btn .right,
+.num-container-btn .left {
+  position: absolute;
+  /*margin-top: -3px;*/
   height: 40px;
   opacity: 0.8;
   border-radius: 0px !important;
 }
+.num-container-btn .right {
+  right: -30px;
+}
+
+.num-container-btn .left {
+  left: -30px;
+}
+
 nav#sidebar a {
   color: white;
 }
@@ -302,4 +303,14 @@ nav#sidebar a {
 }
 .text-small {
   font-size: 14px !important;
+}
+.dropdownitem:hover,
+.dropdown-toggle {
+  background: white !important;
+  color: #f7b100 !important;
+}
+.dropdown-item:hover {
+  background-color: #f7b100 !important;
+  color: white !important;
+  margin: 0px;
 }

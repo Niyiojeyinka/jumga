@@ -1,5 +1,5 @@
 import EmptyTemplate from "./empttemplate";
-import { useParams, Link, Redirect } from "react-router-dom";
+import { useParams, Link, Redirect, useLocation } from "react-router-dom";
 import { useState } from "react";
 import request from "../helpers/request";
 import { useAlert } from "react-alert";
@@ -39,7 +39,7 @@ const LoginPage = () => {
           user: response.body.data.user,
           token: response.body.data.token,
           userType: type,
-          loggeIn: true,
+          loggedIn: true,
         })
       );
       setLoadingBtn(false);
@@ -56,7 +56,7 @@ const LoginPage = () => {
     data[e.target.name] = e.target.value;
     setLoginData({ ...loginData, ...data });
   };
-  if (redirectTo == "" || !auth.loggeIn) {
+  if (redirectTo == "") {
     return (
       <EmptyTemplate>
         <div className="row w-100 card py-3 px-4">

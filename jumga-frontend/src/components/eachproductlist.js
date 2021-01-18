@@ -53,27 +53,27 @@ const EachProductList = (props) => {
       onClick={() => {
         addToWishlist(props.product);
       }}
-      className="btn color-yellow m-2"
+      className="btn bg-white m-2"
     >
-      <i className="fa fa-heart text-white"></i>
+      <i className="fa fa-heart text-yellow"></i>
     </button>
   ) : (
     <button
       onClick={() => {
         addToWishlist(props.product);
       }}
-      className="btn color-yellow m-2"
+      className="btn bg-white m-2"
     >
-      <i className="fa fa-bin text-white"></i>
+      <i className="fa fa-trash text-danger"></i>
     </button>
   );
 
   if (redirectTo == "") {
     return (
-      <Link
-        to={`/product/${props.product.id}/${encodeURI(props.product.name)}`}
-      >
-        <div className="each-product-list m-2">
+      <div className="each-product-list m-2">
+        <Link
+          to={`/product/${props.product.id}/${encodeURI(props.product.name)}`}
+        >
           <div style={{ display: "inline" }}>
             <img
               src={
@@ -85,33 +85,33 @@ const EachProductList = (props) => {
               alt={`${props.product.name} image`}
             />
           </div>
-          <div style={{ display: "inline-block" }}>
-            <div className="py-2">
+        </Link>
+        <div style={{ display: "inline-block" }}>
+          <div className="py-1">
+            <Link
+              to={`/product/${props.product.id}/${encodeURI(
+                props.product.name
+              )}`}
+            >
               <small>{props.product.name}</small>
-              <br></br>
               <br></br>
               <strong className="product-list-tile-price">
                 ${props.product.price}
               </strong>
-            </div>
-          </div>
-
-          <div
-            style={{ display: "none" }}
-            className="container-fluid each-product-overlay p-3"
-          >
+            </Link>
+            <br></br>
             <button
               onClick={() => {
                 addToCart(props.product, products, 1);
               }}
-              className="btn color-yellow m-3"
+              className="btn bg-white m-3"
             >
-              <i className="fa fa-shopping-cart text-white"></i>
+              <i className="fa fa-shopping-cart text-yellow"></i>
             </button>
             {wishlist}
           </div>
         </div>
-      </Link>
+      </div>
     );
   } else {
     return <Redirect to={redirectTo} />;

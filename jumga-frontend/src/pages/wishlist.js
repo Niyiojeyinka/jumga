@@ -1,6 +1,6 @@
-import EmptyTemplate from "./empttemplate";
+import ContentTemplate from "./contenttemplate";
 import { useSelector } from "react-redux";
-import ProductList from "../divisions/productslist";
+import ProductListing from "../divisions/productlisting";
 import { Redirect } from "react-router-dom";
 
 const WishList = () => {
@@ -10,13 +10,13 @@ const WishList = () => {
 
   if (auth.loggedIn) {
     return (
-      <EmptyTemplate>
-        <ProductList
+      <ContentTemplate>
+        <ProductListing
           products={wishlist.products}
           showAddToWishlistBtn={false}
           title="Wishlist"
         />
-      </EmptyTemplate>
+      </ContentTemplate>
     );
   } else {
     return <Redirect to={"/customer/login"} />;

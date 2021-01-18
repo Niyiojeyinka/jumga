@@ -23,14 +23,27 @@ const RegisterPage = () => {
     }
     e.target.setAttribute("disabled", "");
     setLoadingBtn(true);
-    let userReg = {
-      name: regData.firstname + " " + regData.lastname,
-      email: regData.email,
-      password: regData.password,
-      user_type: type,
-      country_code: regData.country,
-      url: FRONTEND_BASE_URL,
-    };
+    let userReg;
+    if (type == "customer") {
+      userReg = {
+        name: regData.firstname + " " + regData.lastname,
+        email: regData.email,
+        password: regData.password,
+        user_type: type,
+        country_code: regData.country,
+        url: FRONTEND_BASE_URL,
+      };
+    } else {
+      userReg = {
+        name: regData.name,
+        email: regData.email,
+        password: regData.password,
+        user_type: type,
+        country_code: regData.country,
+        url: FRONTEND_BASE_URL,
+      };
+    }
+
     const response = await request("auth/create", "POST", userReg);
     if (response.status != 201) {
       //error occurred
@@ -57,6 +70,58 @@ const RegisterPage = () => {
   ) : (
     <></>
   );
+
+  const nameInput =
+    type == "customer" ? (
+      <div className="row">
+        <div className="col-md-6">
+          <div className="form-group row">
+            <label className="col-sm-3 col-form-label">First Name</label>
+            <div className="col-sm-9">
+              <input
+                onChange={handleChange}
+                placeholder="Firstname"
+                name="firstname"
+                type="text"
+                className="form-control"
+              />
+            </div>
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="form-group row">
+            <label className="col-sm-3 col-form-label">Last Name</label>
+            <div className="col-sm-9">
+              <input
+                placeholder="Lastname"
+                onChange={handleChange}
+                name="lastname"
+                type="text"
+                className="form-control"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    ) : (
+      <div className="row">
+        <div className="form-group row">
+          <span className="col-sm-3 col-form-label">
+            {type.toUpperCase()} Name
+          </span>
+          <br></br>
+          <div className="col-sm-9">
+            <input
+              onChange={handleChange}
+              placeholder="Business Name"
+              name="name"
+              type="text"
+              className="form-control"
+            />
+          </div>
+        </div>
+      </div>
+    );
   if (redirectTo == "") {
     return (
       <EmptyTemplate>
@@ -64,36 +129,7 @@ const RegisterPage = () => {
           <b className="text-yellow action-text">Sign up to start shopping!</b>
           <br></br>
           <br></br>
-          <div className="row">
-            <div className="col-md-6">
-              <div className="form-group row">
-                <label className="col-sm-3 col-form-label">First Name</label>
-                <div className="col-sm-9">
-                  <input
-                    onChange={handleChange}
-                    placeholder="Firstname"
-                    name="firstname"
-                    type="text"
-                    className="form-control"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="form-group row">
-                <label className="col-sm-3 col-form-label">Last Name</label>
-                <div className="col-sm-9">
-                  <input
-                    placeholder="Lastname"
-                    onChange={handleChange}
-                    name="lastname"
-                    type="text"
-                    className="form-control"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+          {nameInput}
           <div className="row">
             <div className="col-md-6">
               <div className="form-group row">

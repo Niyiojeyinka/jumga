@@ -24,8 +24,36 @@ const SidebarMobile = () => {
         <div className="p-2 mob-each-link">
           <Link to="/customer/register">Sign Up</Link>
         </div>
-        <div className="p-2 mob-each-link">
+
+        <div
+          data-toggle="collapse"
+          data-target="#merchant"
+          className="p-2 mob-each-link"
+        >
           <a>Merchants</a>
+        </div>
+        <div id="merchant" class="collapse">
+          <Link to="/merchant/register">
+            <div className="py-1 px-4 mob-each-link"> Sign Up</div>
+          </Link>
+          <Link to="/merchant/login">
+            <div className="py-1 px-4 mob-each-link"> Sign In</div>
+          </Link>
+        </div>
+        <div
+          data-toggle="collapse"
+          data-target="#dispatcher"
+          className="p-2 mob-each-link"
+        >
+          <a>Dispatchers</a>
+        </div>
+        <div id="dispatcher" class="collapse">
+          <Link to="/dispatcher/register">
+            <div className="py-1 px-4 mob-each-link"> Sign Up</div>
+          </Link>
+          <Link to="/dispatcher/login">
+            <div className="py-1 px-4 mob-each-link"> Sign In</div>
+          </Link>
         </div>
         <div className="p-2 mob-each-link">
           <a>Contact</a>

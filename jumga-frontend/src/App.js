@@ -1,5 +1,6 @@
 import "./assets/css/colors.css";
 import "./assets/css/App.css";
+import "./assets/css/products.css";
 import "./assets/css/dashboard.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import $ from "jquery";
@@ -17,7 +18,6 @@ import OrdersPage from "./pages/userdashboard/orderspage";
 import PaymentsPage from "./pages/userdashboard/paymentspage";
 import WishList from "./pages/wishlist";
 import MerchantDashboard from "./pages/merchant/dashboard";
-import RiderDashboard from "./pages/dispatchrider/dashboard";
 import request from "./helpers/request";
 import { useDispatch } from "react-redux";
 import React, { useEffect } from "react";
@@ -29,6 +29,7 @@ import storerecentproducts, {
 import storefrontreviews from "./actions/storefrontreviews";
 import ScrollToTop from "./components/scrolltotop";
 import Dashboard from "./pages/dashboard";
+import TestPage from "./pages/test";
 function App() {
   const dispatch = useDispatch();
 
@@ -54,19 +55,15 @@ function App() {
     <Router>
       <ScrollToTop>
         <Switch>
-          <Route path="/rider/dashboard">
-            <RiderDashboard />
-          </Route>
-          <Route path="/merchant/dashboard">
-            <MerchantDashboard />
-          </Route>
           <Route
             path="/product/:id/:title"
             component={(props) => (
               <ProductPage {...props} key={window.location.pathname} />
             )}
           />
-
+          <Route path="/test">
+            <TestPage />
+          </Route>
           <Route path="/customer/wishlist">
             <WishList />
           </Route>

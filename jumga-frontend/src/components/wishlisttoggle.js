@@ -57,6 +57,7 @@ const WishlistToggle = (props) => {
             }
           } else {
             removeFromWishlist(product, products);
+            setActionAdd(true);
           }
         }}
         className="btn color-yellow text-white"

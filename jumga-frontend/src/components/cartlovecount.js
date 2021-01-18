@@ -14,7 +14,7 @@ const CartLoveCount = () => {
   }
 
   return (
-    <span className="">
+    <span className="cartlovecount">
       <span className="social-line">
         <Link to="/customer/wishlist">
           <span className="badge-container">
@@ -24,12 +24,14 @@ const CartLoveCount = () => {
             <i className="fa fa-heart badge-icon"></i>
           </span>
         </Link>
-        <span className="badge-container">
-          <span className="badge badge-warning text-white pbadge">
-            {cartno}
+        <Link to="/customer/cart">
+          <span className="badge-container">
+            <span className="badge badge-warning text-white pbadge">
+              {cartno}
+            </span>
+            <i className="fa fa-shopping-cart badge-icon"></i>
           </span>
-          <i className="fa fa-shopping-cart badge-icon"></i>
-        </span>
+        </Link>
       </span>
       <i>Total :</i>
       <strong className="">${totalAmount}</strong>
