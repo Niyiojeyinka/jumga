@@ -42,6 +42,7 @@ const HomePage = () => {
           products={products.random}
           productListingPageType={"normal"}
           title="Top Products"
+          showQuantity={false}
         />
       </section>
       <section className="p-5">

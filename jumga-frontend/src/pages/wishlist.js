@@ -12,6 +12,7 @@ const WishList = () => {
           products={wishlist.products}
           productListingPageType={"wishlist"}
           title="Wishlist"
+          showQuantity={false}
         />
       </ContentTemplate>
     </AuthCheck>

@@ -76,9 +76,13 @@ function App() {
           <Route path="/customer/wishlist">
             <WishList />
           </Route>
-          <Route path="/customer/cart">
-            <CartPage />
-          </Route>
+
+          <Route
+            path="/customer/cart"
+            component={(props) => (
+              <CartPage {...props} key={window.location.pathname} />
+            )}
+          />
           <Route path="/contact">
             <ContactPage />
           </Route>

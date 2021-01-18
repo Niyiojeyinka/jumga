@@ -6,6 +6,7 @@ const ProductListing = (props) => {
         productListingPageType={props.productListingPageType}
         product={product}
         key={"product" + index}
+        showQuantity={props.showQuantity}
       />
     );
   });

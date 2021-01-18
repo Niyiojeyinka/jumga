@@ -10,10 +10,11 @@ import addtowishlist, { removefromwishlist } from "../actions/storewishlist";
 import addtocart from "../actions/storecart";
 import { Link } from "react-router-dom";
 import addToCartArray from "../helpers/addtocart";
-import removefromcart from "../helpers/removefromcart";
 import striptags from "../helpers/striptag";
 import ProductBoxBtn from "./productboxbtn";
 import btnData from "./btntransitiondata";
+import NumberInput from "./numberinput";
+import { removefromcart } from "../actions/storecart";
 const EachProductList = (props) => {
   const auth = useSelector((store) => store.auth);
   const alert = useAlert();
@@ -62,10 +63,10 @@ const EachProductList = (props) => {
         //switch
         //remove from cart
         setDarkBtnData(btnData.loading);
-        if (removeFromCart(product, products, quantity)) {
-          setDarkBtnData(btnData.cart.add);
-          setDarkBtnCtrl(false);
-        }
+        dispatch(removefromcart(product));
+        alert.success("product removed from cart!");
+        setDarkBtnData(btnData.cart.add);
+        setDarkBtnCtrl(true);
       }
     } else if (props.productListingPageType == "wishlist") {
       //remove from wishlist
@@ -76,26 +77,19 @@ const EachProductList = (props) => {
     } else if (props.productListingPageType == "cart") {
       //remove from cart
       setDarkBtnData(btnData.loading);
-      if (removeFromCart(product, products, quantity)) {
-        setDarkBtnData(btnData.cart.add);
-        setDarkBtnCtrl(false);
-      }
+      dispatch(removefromcart(product));
+      alert.success("product removed from cart!");
+      setDarkBtnData(btnData.cart.add);
+      setDarkBtnCtrl(false);
     }
   };
 
   const addToCart = (product, products, quantity) => {
-    const newProducts = addToCartArray(product, products, quantity, true);
-    dispatch(addtocart(newProducts));
+    dispatch(addtocart({ product, no: quantity }));
     alert.success("product(s) added to cart!");
     return true;
   };
 
-  const removeFromCart = (product, products, quantity) => {
-    const newProducts = removefromcart(product, products, quantity, true);
-    dispatch(addtocart(newProducts));
-    alert.success("product(removed from cart!");
-    return true;
-  };
   const addToWishlist = (product) => {
     if (auth.loggedIn) {
       dispatch(addtowishlist(product));
@@ -153,6 +147,7 @@ const EachProductList = (props) => {
   ) : (
     <></>
   );
+
   const displayDarkBtnJSX = btnData[props.productListingPageType]["dark"] ? (
     <ProductBoxBtn
       type={"dark"}
@@ -160,6 +155,21 @@ const EachProductList = (props) => {
       handleClick={() => {
         handleDarkClick(props.product, products, 1);
       }}
+    />
+  ) : (
+    <></>
+  );
+
+  const numInput = props.showQuantity ? (
+    <NumberInput
+      max={props.product.in_stock}
+      getValue={(value) => {
+        //overide new value
+        dispatch(
+          addtocart({ product: props.product, no: value, override: true })
+        );
+      }}
+      defaultValue={props.product.count}
     />
   ) : (
     <></>
@@ -208,6 +218,7 @@ const EachProductList = (props) => {
             </div>
             <hr></hr>
             <div className="card-body">
+              <div className="text-left px-3">{numInput}</div>
               <div className="text-right buttons">
                 {props.children}
                 {displayLightBtnJSX}

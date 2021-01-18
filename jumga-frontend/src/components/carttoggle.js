@@ -14,8 +14,7 @@ const CartToggle = (props) => {
   const [redirectTo, setRedirectTo] = useState("");
 
   const addToCart = (product, products, quantity) => {
-    const newProducts = addToCartArray(product, products, quantity, true);
-    dispatch(addtocart(newProducts));
+    dispatch(addtocart({ product, no: quantity }));
     alert.success("product(s) added to cart!");
   };
   if (redirectTo == "") {
