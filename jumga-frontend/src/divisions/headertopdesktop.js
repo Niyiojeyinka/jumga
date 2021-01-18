@@ -13,7 +13,7 @@ const HeaderTopDesktop = () => {
 
   const topAuthJSX = auth.loggedIn ? (
     <span className="tagline">
-      <Link to={`/${auth.type}/dashboard`}>Dashboard</Link>
+      <Link to={`/${auth.userType}/dashboard`}>Dashboard</Link>
     </span>
   ) : (
     <>

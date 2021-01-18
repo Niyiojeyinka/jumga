@@ -8,6 +8,22 @@ const SidebarMobile = () => {
   let systemvarData = useSelector((store) => store.systemvar);
   const contactemail = extractsysvars(systemvarData, "contactEmail");
   const tagline = extractsysvars(systemvarData, "tagline");
+  const auth = useSelector((store) => store.auth);
+  const topAuthJSX = auth.loggedIn ? (
+    <div className="p-2 mob-each-link">
+      <Link to={`/${auth.userType}/dashboard`}>Dashboard</Link>
+    </div>
+  ) : (
+    <>
+      <div className="p-2 mob-each-link">
+        <Link to="/customer/login">Sign In</Link>
+      </div>
+      <div className="p-2 mob-each-link">
+        <Link to="/customer/register">Sign Up</Link>
+      </div>
+    </>
+  );
+
   return (
     <div className="sidebar pl-4 pr-2 py-4">
       <Logo width="35" marginLeft="3%" />
@@ -18,13 +34,7 @@ const SidebarMobile = () => {
         <div className="p-2 mob-each-link">
           <Link to="/">Home</Link>
         </div>
-        <div className="p-2 mob-each-link">
-          <Link to="/customer/login">Sign In</Link>
-        </div>
-        <div className="p-2 mob-each-link">
-          <Link to="/customer/register">Sign Up</Link>
-        </div>
-
+        {topAuthJSX}
         <div
           data-toggle="collapse"
           data-target="#merchant"
