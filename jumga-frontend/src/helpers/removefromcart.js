@@ -11,7 +11,7 @@ const removeFromCartArray = (product, products, no = 0) => {
   let found = false;
 
   for (let i = 0; i < products.length; i++) {
-    if (product.id == products[id]) {
+    if (product.id == products[i].id) {
       found = true;
       //increase it
       if (products[i].count > 1) {

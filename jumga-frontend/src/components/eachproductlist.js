@@ -48,7 +48,7 @@ const EachProductList = (props) => {
     }
   };
 
-  const wishlist = props.showAddToWishlistBtn ? (
+  const wishlist = props.productListingPageType ? (
     <button
       onClick={() => {
         addToWishlist(props.product);

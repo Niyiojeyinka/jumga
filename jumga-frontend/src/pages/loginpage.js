@@ -43,7 +43,7 @@ const LoginPage = () => {
         })
       );
       setLoadingBtn(false);
-      setRedirectTo(`/${type}/dashboard`);
+      setRedirectTo(`/`);
     }
   };
   const loadingIcon = loadingBtn ? (

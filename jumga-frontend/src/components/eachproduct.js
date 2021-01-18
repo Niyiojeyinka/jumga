@@ -10,24 +10,97 @@ import addtowishlist, { removefromwishlist } from "../actions/storewishlist";
 import addtocart from "../actions/storecart";
 import { Link } from "react-router-dom";
 import addToCartArray from "../helpers/addtocart";
+import removefromcart from "../helpers/removefromcart";
 import striptags from "../helpers/striptag";
+import ProductBoxBtn from "./productboxbtn";
+import btnData from "./btntransitiondata";
 const EachProductList = (props) => {
   const auth = useSelector((store) => store.auth);
   const alert = useAlert();
   const [redirectTo, setRedirectTo] = useState("");
   const dispatch = useDispatch();
   const cart = useSelector((store) => store.cart);
-  let products = cart.products;
+  const products = cart.products;
+  const [lightBtnCtrl, setLightBtnCtrl] = useState(true);
+  const [lightBtnData, setLightBtnData] = useState("");
+  const [darkBtnCtrl, setDarkBtnCtrl] = useState(true);
+  const [darkBtnData, setDarkBtnData] = useState("");
+
+  const handleLightClick = (product) => {
+    if (props.productListingPageType == "normal") {
+      if (lightBtnCtrl) {
+        //default state
+        //add to wishlist
+        setLightBtnData(btnData.loading);
+        if (addToWishlist(product)) {
+          setLightBtnData(btnData.wishlist.remove);
+          setLightBtnCtrl(false);
+        }
+      } else {
+        //switch
+        //remove from wishlist
+        setLightBtnData(btnData.loading);
+        removeWishlist(product);
+        setLightBtnData(btnData.wishlist.add);
+        setLightBtnCtrl(false);
+      }
+    }
+
+    //light no wishlist
+  };
+  const handleDarkClick = (product, products, quantity) => {
+    if (props.productListingPageType == "normal") {
+      if (darkBtnCtrl) {
+        //default state
+        //add to wishlist
+        setDarkBtnData(btnData.loading);
+        if (addToCart(product, products, quantity)) {
+          setDarkBtnData(btnData.cart.remove);
+          setDarkBtnCtrl(false);
+        }
+      } else {
+        //switch
+        //remove from cart
+        setDarkBtnData(btnData.loading);
+        if (removeFromCart(product, products, quantity)) {
+          setDarkBtnData(btnData.cart.add);
+          setDarkBtnCtrl(false);
+        }
+      }
+    } else if (props.productListingPageType == "wishlist") {
+      //remove from wishlist
+      setDarkBtnData(btnData.loading);
+      removeWishlist(product);
+      setDarkBtnData(btnData.wishlist.add);
+      setDarkBtnCtrl(false);
+    } else if (props.productListingPageType == "cart") {
+      //remove from cart
+      setDarkBtnData(btnData.loading);
+      if (removeFromCart(product, products, quantity)) {
+        setDarkBtnData(btnData.cart.add);
+        setDarkBtnCtrl(false);
+      }
+    }
+  };
 
   const addToCart = (product, products, quantity) => {
     const newProducts = addToCartArray(product, products, quantity, true);
     dispatch(addtocart(newProducts));
     alert.success("product(s) added to cart!");
+    return true;
+  };
+
+  const removeFromCart = (product, products, quantity) => {
+    const newProducts = removefromcart(product, products, quantity, true);
+    dispatch(addtocart(newProducts));
+    alert.success("product(removed from cart!");
+    return true;
   };
   const addToWishlist = (product) => {
     if (auth.loggedIn) {
       dispatch(addtowishlist(product));
       alert.success("added to wishlist!");
+      return true;
     } else {
       //redirect to login
       alert.show("You need to sign in first!");
@@ -45,34 +118,52 @@ const EachProductList = (props) => {
           },
         ],
       });
+      return false;
     }
   };
 
   const removeWishlist = (product) => {
     dispatch(removefromwishlist(product));
-    alert.success("added to wishlist!");
+    alert.success("Removed from wishlist!");
   };
 
-  const wishlist = props.showAddToWishlistBtn ? (
-    <button
-      onClick={() => {
-        addToWishlist(props.product);
-      }}
-      className="btn btn-outline-dark"
-    >
-      <i className="fa fa-heart text-white"></i> add to wishlist
-    </button>
-  ) : (
-    <button
-      onClick={() => {
-        removeWishlist(props.product);
-      }}
-      className="btn btn-outline-dark"
-    >
-      <i className="fa fa-trash  text-dark"></i> remove from wishlist
-    </button>
-  );
+  let lightBtnDataToUse;
+  if (props.productListingPageType == "normal") {
+    lightBtnDataToUse =
+      lightBtnData == "" ? btnData.wishlist.add : lightBtnData;
+  }
 
+  let darkBtnDataToUse;
+  if (props.productListingPageType == "normal") {
+    darkBtnDataToUse = darkBtnData == "" ? btnData.cart.add : darkBtnData;
+  } else if (props.productListingPageType == "wishlist") {
+    darkBtnDataToUse = btnData.wishlist.remove;
+  } else if (props.productListingPageType == "cart") {
+    darkBtnDataToUse = btnData.cart.remove;
+  }
+
+  const displayLightBtnJSX = btnData[props.productListingPageType]["light"] ? (
+    <ProductBoxBtn
+      type={"light"}
+      data={lightBtnDataToUse}
+      handleClick={() => {
+        handleLightClick(props.product);
+      }}
+    />
+  ) : (
+    <></>
+  );
+  const displayDarkBtnJSX = btnData[props.productListingPageType]["dark"] ? (
+    <ProductBoxBtn
+      type={"dark"}
+      data={darkBtnDataToUse}
+      handleClick={() => {
+        handleDarkClick(props.product, products, 1);
+      }}
+    />
+  ) : (
+    <></>
+  );
   if (redirectTo == "") {
     return (
       <>
@@ -112,21 +203,16 @@ const EachProductList = (props) => {
               </Link>
               <div className="d-flex align-items-center flex-row">
                 <small>from </small>
-                <span className="guarantee">Merchant Name</span>
+                <span className="guarantee">{props.product.merchant.name}</span>
               </div>
             </div>
             <hr></hr>
             <div className="card-body">
               <div className="text-right buttons">
-                {wishlist}
-                <button
-                  onClick={() => {
-                    addToCart(props.product, products, 1);
-                  }}
-                  className="btn btn-dark ml-2"
-                >
-                  <i className="fa fa-shopping-cart text-white"></i> Add to cart
-                </button>
+                {props.children}
+                {displayLightBtnJSX}
+
+                {displayDarkBtnJSX}
               </div>
             </div>
           </div>

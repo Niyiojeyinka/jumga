@@ -3,7 +3,7 @@ const ProductListing = (props) => {
   const productlist = props.products?.map((product, index) => {
     return (
       <EachProduct
-        showAddToWishlistBtn={props.showAddToWishlistBtn}
+        productListingPageType={props.productListingPageType}
         product={product}
         key={"product" + index}
       />

@@ -1,6 +1,6 @@
 import ProductList from "../divisions/productslist";
 import Footer from "../divisions/footer";
-import Header from "../divisions/header";
+import Header from "../divisions/contentheader";
 import { useSelector } from "react-redux";
 import OverlayLoading from "../components/overlayloading";
 import { useState, useEffect } from "react";

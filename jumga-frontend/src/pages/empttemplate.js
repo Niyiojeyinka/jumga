@@ -19,7 +19,7 @@ const EmptyTemplate = (props) => {
       <section className="p-5">
         <ProductList
           products={products.random}
-          showAddToWishlistBtn={true}
+          productListingPageType={true}
           title="Top Products"
         />
       </section>

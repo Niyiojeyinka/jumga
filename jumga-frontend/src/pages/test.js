@@ -1,5 +1,5 @@
 import Cookies from "universal-cookie";
-
+import { useState } from "react";
 const TestPage = () => {
   const cookies = new Cookies();
 
@@ -13,7 +13,7 @@ const TestPage = () => {
   );
   const t = cookies.get("myCat").parts;
   for (let v of t) {
-    console.log(v);
+    // console.log(v);
   }
 
   return (

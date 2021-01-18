@@ -1,25 +1,20 @@
 import ContentTemplate from "./contenttemplate";
 import { useSelector } from "react-redux";
 import ProductListing from "../divisions/productlisting";
-import { Redirect } from "react-router-dom";
-
+import AuthCheck from "./authcheck";
 const WishList = () => {
-  const auth = useSelector((store) => store.auth);
-
   const wishlist = useSelector((store) => store.wishlist);
 
-  if (auth.loggedIn) {
-    return (
+  return (
+    <AuthCheck>
       <ContentTemplate>
         <ProductListing
           products={wishlist.products}
-          showAddToWishlistBtn={false}
+          productListingPageType={"wishlist"}
           title="Wishlist"
         />
       </ContentTemplate>
-    );
-  } else {
-    return <Redirect to={"/customer/login"} />;
-  }
+    </AuthCheck>
+  );
 };
 export default WishList;

@@ -10,10 +10,12 @@ import React, { useState, useEffect } from "react";
 import request from "../helpers/request";
 import storeslider from "../actions/storeslider";
 import OverlayLoading from "../components/overlayloading";
-const HomePage = () => {
+import { useParams } from "react-router-dom";
+const CategoryPage = () => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
-
+  const [categoryProducts, setCategoryProducts] = useState([]);
+  const { category } = useParams();
   useEffect(async () => {
     //fetch data and dispatch
     if (!loaded) {
@@ -21,9 +23,15 @@ const HomePage = () => {
     }
     const sliderresponse = await request("page/sliders", "GET");
     dispatch(storeslider(sliderresponse.body?.data.sliders[0]));
+    const res = await request("products/" + category + "/9/0", "GET");
+    if (res.status == 200) {
+      const products = res.body.data.products;
+      setCategoryProducts(products);
+    } else {
+      setCategoryProducts([]);
+    }
   }, [loaded]);
 
-  const products = useSelector((store) => store.products);
   return (
     <OverlayLoading loaded={loaded}>
       <Header>
@@ -32,24 +40,14 @@ const HomePage = () => {
       <section className="p-5">
         <ProductList
           productListingPageType={true}
-          products={products.recents}
-          title="Recent Products"
+          products={categoryProducts}
+          title={category}
         />
       </section>
-      <Benefits />
-      <section className="p-5">
-        <ProductListing
-          products={products.random}
-          productListingPageType={"normal"}
-          title="Top Products"
-        />
-      </section>
-      <section className="p-5">
-        <Reviews />
-      </section>
+
       <Footer />
     </OverlayLoading>
   );
 };
 
-export default HomePage;
+export default CategoryPage;

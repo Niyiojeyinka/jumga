@@ -17,7 +17,7 @@ import ContactPage from "./pages/contactpage";
 import OrdersPage from "./pages/userdashboard/orderspage";
 import PaymentsPage from "./pages/userdashboard/paymentspage";
 import WishList from "./pages/wishlist";
-import MerchantDashboard from "./pages/merchant/dashboard";
+//import MerchantDashboard from "./pages/merchant/dashboard";
 import request from "./helpers/request";
 import { useDispatch } from "react-redux";
 import React, { useEffect } from "react";
@@ -30,6 +30,8 @@ import storefrontreviews from "./actions/storefrontreviews";
 import ScrollToTop from "./components/scrolltotop";
 import Dashboard from "./pages/dashboard";
 import TestPage from "./pages/test";
+import CategoryPage from "./pages/categorypage";
+import CartPage from "./pages/cartpage";
 function App() {
   const dispatch = useDispatch();
 
@@ -67,6 +69,9 @@ function App() {
           <Route path="/customer/wishlist">
             <WishList />
           </Route>
+          <Route path="/customer/cart">
+            <CartPage />
+          </Route>
           <Route path="/contact">
             <ContactPage />
           </Route>
@@ -79,6 +84,12 @@ function App() {
           <Route path="/:type/dashboard">
             <Dashboard />
           </Route>
+          <Route
+            path="/category/:category"
+            component={(props) => (
+              <CategoryPage {...props} key={window.location.pathname} />
+            )}
+          />
           <Route path="/:type/register">
             <RegisterPage />
           </Route>
