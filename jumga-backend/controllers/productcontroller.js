@@ -116,13 +116,57 @@ exports.getRecentProduct = async (req, res) => {
       limit: parseInt(req.params.limit),
       offset: req.params.offset ? parseInt(req.params.offset) : 0,
       order: [["id", "DESC"]],
-      include: ["images"],
+      include: [
+        "images",
+        {
+          model: db.User,
+          as: "merchant",
+          attributes: { exclude: ["password"] },
+        },
+      ],
     });
 
     return res.status(200).json({
       result: 1,
       error: [],
       message: "Recent Products retrieved Successfuly",
+      data: { products },
+    });
+  } catch (e) {
+    return res.status(400).json({
+      result: 0,
+      error: e,
+      data: [],
+    });
+  }
+};
+
+exports.getByCategory = async (req, res) => {
+  try {
+    const category = await db.Category.findOne({
+      where: { slug: req.params.category },
+    });
+
+    const products = await db.Product.findAll({
+      where: {
+        CategoryId: category.id,
+      },
+      limit: parseInt(req.params.limit),
+      offset: req.params.offset ? parseInt(req.params.offset) : 0,
+      order: [["id", "DESC"]],
+      include: [
+        "images",
+        {
+          model: db.User,
+          as: "merchant",
+          attributes: { exclude: ["password"] },
+        },
+      ],
+    });
+    return res.status(200).json({
+      result: 1,
+      error: [],
+      message: "Category Products retrieved Successfuly",
       data: { products },
     });
   } catch (e) {

@@ -9,5 +9,6 @@ router.post("/", productCtrl.addProduct);
 router.get("/:id", productCtrl.getProduct);
 router.delete("/:id", productCtrl.deleteProduct);
 router.get("/recents/:limit/:offset", productCtrl.getRecentProduct);
+router.get("/:category/:limit/:offset", productCtrl.getByCategory);
 
 module.exports = router;

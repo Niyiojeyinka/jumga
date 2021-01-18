@@ -19,7 +19,11 @@ function applyExtraSetup(sequelize) {
   } = sequelize.models;
 
   Merchant.hasMany(Product);
-  Product.belongsTo(Merchant);
+  Product.belongsTo(User, {
+    foreignKey: "MerchantId",
+    as: "merchant",
+  });
+
   User.hasOne(Merchant);
   User.hasOne(Admin);
   User.hasOne(Dispatcher);
