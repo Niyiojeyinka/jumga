@@ -5,7 +5,11 @@ import InlinePayment from "../payments/inlinepayment";
 import countries from "../../helpers/countriesmeta";
 import convert from "../../helpers/currencyconverter";
 import formatMoney from "../../helpers/formatmoney";
+import request from "../../helpers/request";
+import { useAlert } from "react-alert";
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 const NonPaymentPage = (props) => {
+  const alert = useAlert();
   const cookies = new Cookies();
   const auth = cookies.get("auth");
   const amountToPay = 50;
@@ -18,13 +22,31 @@ const NonPaymentPage = (props) => {
       amountToPay
     );
     setAmount(amount);
-  });
+  }, []);
 
   let displayAmount = amount ? (
     countries[auth.country_code]["currency"] + "" + formatMoney(amount)
   ) : (
     <i className="fa fa-circle-o-notch spin text-success mx-2"></i>
   );
+
+  const recordPrePayment = async (data) => {
+    let res = await request("payments/record/pre", "POST", data);
+    if (res.status != 201) {
+      alert.error("Error couldnt record your record");
+    }
+  };
+
+  const handlePostPayment = async (data) => {
+    let res = await request("payments/confirm", "POST", data);
+    if (res.status != 200) {
+      alert.error("Error couldnt record your record");
+    } else {
+      alert.success("Payment Successfuul!");
+      window.location.reload();
+    }
+  };
+
   return (
     <DashboardTemplate>
       <div className="container p-5">
@@ -48,10 +70,21 @@ const NonPaymentPage = (props) => {
             }
             className="btn btn-block bg-white border text-success"
             handleClick={(data) => {
-              console.log(data);
+              recordPrePayment({
+                userId: auth.user.id,
+                userType: auth.userType,
+                type: "activation",
+                ref: data.reference,
+                amount: data.amount,
+                pre_conv_amount: amountToPay,
+              });
             }}
             handleCallback={(response) => {
               console.log(response);
+              handlePostPayment(response);
+              //if successfull,send server confirmation request
+              //with payment type
+              //and redirect
             }}
             data={{
               amount: amount,

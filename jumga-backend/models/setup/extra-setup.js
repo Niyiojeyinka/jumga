@@ -24,13 +24,13 @@ function applyExtraSetup(sequelize) {
     as: "merchant",
   });
 
-  User.hasOne(Merchant);
+  User.hasOne(Merchant, {
+    foreignKey: "UserId",
+    as: "merchant",
+  });
   User.hasOne(Admin);
   User.hasOne(Dispatcher);
   User.hasOne(Customer);
-  User.hasMany(Payment, {
-    foreignKey: "PayerId",
-  });
   User.hasMany(Wishlist);
   User.hasMany(Order);
   User.hasMany(Address);
@@ -48,10 +48,6 @@ function applyExtraSetup(sequelize) {
     foreignKey: "ProductId",
     as: "images",
   });
-  /*Featureimage.belongsTo(Product, {
-    foreignKey: "id",
-    as: "product",
-  });*/
   User.hasOne(Withdrawalsetting);
   User.hasOne(Account);
   User.hasMany(Withdrawal, {

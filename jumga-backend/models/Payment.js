@@ -6,7 +6,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     type: {
       type: Sequelize.ENUM,
-      values: ["deposit", "payment"],
+      values: ["deposit", "payment", "activation"],
     },
     PayerId: {
       type: Sequelize.INTEGER,
@@ -21,6 +21,10 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
     },
     amount: {
+      type: Sequelize.DECIMAL(10, 2),
+      allowNull: false,
+    },
+    pre_conv_amount: {
       type: Sequelize.DECIMAL(10, 2),
       allowNull: false,
     },

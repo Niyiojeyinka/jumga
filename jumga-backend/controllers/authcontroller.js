@@ -57,6 +57,12 @@ exports.register = async (req, res) => {
 
         break;
     }
+    //create the user's account
+    await db.Account.create({
+      UserId: user.id,
+      account_bal: 0.0,
+      total_earned: 0.0,
+    });
 
     //send token
     mail.sendMail(

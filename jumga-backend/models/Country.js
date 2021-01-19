@@ -8,6 +8,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    currency: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
     status: {
       type: Sequelize.ENUM,
       values: ["active", "suspended"],

@@ -4,7 +4,7 @@ import generateShortCode from "../../helpers/random";
 import countries from "../../helpers/countriesmeta";
 import Cookies from "universal-cookie";
 
-export default function InlinePayment(props) {
+export default function InlinePaymentWithSubaccount(props) {
   const cookies = new Cookies();
   const auth = cookies.get("auth");
   const [reference, setReference] = useState(generateShortCode());
