@@ -22,6 +22,7 @@ module.exports = {
           password:
             "$2b$10$cDqeV6pNtpdcGxTCybmflOWCg3l32leyqaOGF./IIQzYBkD/XNI4S",
           role: "merchant",
+          mobilephone: "345678909876",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -32,6 +33,7 @@ module.exports = {
           password:
             "$2b$10$cDqeV6pNtpdcGxTCybmflOWCg3l32leyqaOGF./IIQzYBkD/XNI4S",
           role: "dispatcher",
+          mobilephone: "1234567890",
           createdAt: new Date(),
           updatedAt: new Date(),
         },

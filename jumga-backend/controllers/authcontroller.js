@@ -36,6 +36,7 @@ exports.register = async (req, res) => {
       country_code: req.body.country_code,
       email: req.body.email,
       password: hashed,
+      mobilephone: req.body.mobilephone ? req.body.mobilephone : "",
       role: req.body.user_type,
     });
     switch (req.body.user_type) {

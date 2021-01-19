@@ -8,6 +8,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: true,
     },
+    dispatcherId: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
     status: {
       type: Sequelize.ENUM,
       values: ["active", "pending", "suspended"],

@@ -60,7 +60,7 @@ module.exports = {
 
         {
           name: "activationFee",
-          value: 50,
+          value: 20,
           createdAt: new Date(),
           updatedAt: new Date(),
         },

@@ -42,3 +42,53 @@ exports.confirmUserType = (req, res) => {
     error: [],
   });
 };
+
+exports.getDispachers = async (req, res) => {
+  const dispatchers = await db.User.findAll({
+    where: {
+      role: "dispatcher",
+    },
+    attributes: ["name", "email"],
+  });
+
+  return res.status(200).json({
+    result: 1,
+    message: "confirmed",
+    data: dispatchers,
+    error: [],
+  });
+};
+
+exports.setDispatcher = async (req, res) => {
+  try {
+    const dispatcher = await db.User.findOne({
+      where: {
+        email: req.body.email,
+      },
+    });
+    if (!dispatcher) {
+      throw new Error("dispatcher not found");
+    }
+    await db.Merchant.update(
+      {
+        dispatcherId: dispatcher.id,
+      },
+      {
+        where: { UserId: req.body.userId },
+      }
+    );
+
+    return res.status(200).json({
+      result: 1,
+      message: "dispatcher added",
+      data: {},
+      error: [],
+    });
+  } catch (e) {
+    return res.status(400).json({
+      result: 0,
+      error: e.toString(),
+      data: [],
+    });
+  }
+};

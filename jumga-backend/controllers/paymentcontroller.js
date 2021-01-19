@@ -166,3 +166,113 @@ exports.confirmPayment = async (req, res) => {
     });
   }
 };
+
+/** get banks
+ *
+ * @param {*} req
+ * @param {*} res
+ */
+exports.getBanks = async (req, res) => {
+  try {
+    const response = await extrequest.request(
+      `https://api.flutterwave.com/v3/banks/${req.body.country_code.toUpperCase()}`,
+      "GET",
+      {},
+      process.env.FLW_SECRET_KEY
+    );
+    let resArray = response.body.status === "success" ? response.body.data : [];
+
+    return res.status(200).json({
+      result: 1,
+      error: [],
+      message: "Retrieved banks successfully",
+      data: resArray,
+    });
+  } catch (e) {
+    return res.status(400).json({
+      result: 0,
+      error: e.toString(),
+      data: [],
+    });
+  }
+};
+
+/** submit user bank
+ *
+ * @param {*} req
+ * @param {*} res
+ */
+exports.submitBank = async (req, res) => {
+  try {
+    //get user input
+    //send to flutterwave
+    const user = await db.User.findOne({
+      where: {
+        id: req.body.userId,
+      },
+    });
+    const data = {
+      account_bank: req.body.bank_no,
+      account_number: req.body.account_no,
+      business_name: user.name,
+      country: user.country_code.toUpperCase(),
+      business_email: user.email,
+      business_mobile: user.mobilephone,
+      split_type: "percentage",
+      split_value: 0.5,
+    };
+    //split setting here iis just the default
+    const response = await extrequest.request(
+      `https://api.flutterwave.com/v3/subaccounts`,
+      "POST",
+      data,
+      process.env.FLW_SECRET_KEY
+    );
+
+    await db.Withdrawalsetting.create({
+      bank_code: req.body.bank_no,
+      account_no: req.body.account_no,
+      PayeeId: user.id,
+      payee_type: user.role,
+    });
+    if (response.body.status == "success") {
+      if (user.role === "merchant") {
+        await db.Merchant.update(
+          {
+            subAccountId: response.body.data.subaccount_id,
+          },
+          {
+            where: {
+              UserId: user.id,
+            },
+          }
+        );
+      } else {
+        await db.Dispatcher.update(
+          {
+            subAccountId: response.body.data.subaccount_id,
+          },
+          {
+            where: {
+              UserId: user.id,
+            },
+          }
+        );
+      }
+    } else {
+      throw new Error(response.body.message);
+    }
+    return res.status(200).json({
+      result: 1,
+      error: [],
+      message: "submited subaccount successfully",
+      data: {},
+    });
+  } catch (e) {
+    return res.status(400).json({
+      result: 0,
+      error: e.toString(),
+      data: [],
+    });
+  }
+};

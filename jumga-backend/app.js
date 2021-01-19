@@ -10,6 +10,7 @@ const paymentRoute = require("./routes/payment");
 const path = require("path");
 const db = require("./models");
 const useCor = require("./middlewares/cors");
+const dispatcherRoute = require("./routes/dispatcher");
 
 // force: true will drop the table if it already exists
 db.sequelize.sync({ force: false }).then(() => {
@@ -22,5 +23,6 @@ app.use("/api/auth/", useCor, authRoute);
 app.use("/api/products/", useCor, productRoute);
 app.use("/api/merchants/", useCor, merchantRoute);
 app.use("/api/payments/", useCor, paymentRoute);
+app.use("/api/dispatchers/", useCor, dispatcherRoute);
 
 module.exports = app;

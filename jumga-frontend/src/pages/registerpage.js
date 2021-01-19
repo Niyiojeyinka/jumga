@@ -39,6 +39,7 @@ const RegisterPage = () => {
         email: regData.email,
         password: regData.password,
         user_type: type,
+        mobilephone: regData.mobilephone,
         country_code: regData.country,
         url: FRONTEND_BASE_URL,
       };
@@ -105,19 +106,36 @@ const RegisterPage = () => {
       </div>
     ) : (
       <div className="row">
-        <div className="form-group row">
-          <span className="col-sm-3 col-form-label">
-            {type.toUpperCase()} Name
-          </span>
-          <br></br>
-          <div className="col-sm-9">
-            <input
-              onChange={handleChange}
-              placeholder="Business Name"
-              name="name"
-              type="text"
-              className="form-control"
-            />
+        <div className="col-md-6">
+          <div className="form-group row">
+            <span className="col-sm-3 col-form-label">
+              {type.toUpperCase()} Name
+            </span>
+
+            <div className="col-sm-9">
+              <input
+                onChange={handleChange}
+                placeholder="Business Name"
+                name="mobilephone"
+                type="text"
+                className="form-control"
+              />
+            </div>
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="form-group row">
+            <span className="col-sm-3 col-form-label">Mobile Number</span>
+
+            <div className="col-sm-9">
+              <input
+                onChange={handleChange}
+                placeholder="Business Name"
+                name="mobilephone"
+                type="text"
+                className="form-control"
+              />
+            </div>
           </div>
         </div>
       </div>

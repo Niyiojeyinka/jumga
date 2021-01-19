@@ -34,6 +34,8 @@ import CategoryPage from "./pages/categorypage";
 import CartPage from "./pages/cartpage";
 import Cookies from "universal-cookie";
 import auth from "./actions/auth";
+import WithdrawalPage from "./pages/payments/withdrawalpage";
+import ChooseDispatcher from "./pages/merchant/choosedispatcher";
 function App() {
   const dispatch = useDispatch();
   const cookies = new Cookies();
@@ -76,7 +78,12 @@ function App() {
           <Route path="/customer/wishlist">
             <WishList />
           </Route>
-
+          <Route
+            path="/:type/withdrawal"
+            component={(props) => (
+              <WithdrawalPage {...props} key={window.location.pathname} />
+            )}
+          />
           <Route
             path="/customer/cart"
             component={(props) => (
@@ -92,6 +99,12 @@ function App() {
           <Route path="/orders">
             <OrdersPage />
           </Route>
+          <Route
+            path="/merchant/choosedispatcher"
+            component={(props) => (
+              <ChooseDispatcher {...props} key={window.location.pathname} />
+            )}
+          />
           <Route
             path="/:type/dashboard"
             component={(props) => (

@@ -12,7 +12,7 @@ const NonPaymentPage = (props) => {
   const alert = useAlert();
   const cookies = new Cookies();
   const auth = cookies.get("auth");
-  const amountToPay = 50;
+  const amountToPay = 20;
   const [amount, setAmount] = useState("");
   auth.country_code = auth.user.country_code;
   useEffect(async () => {
@@ -43,7 +43,8 @@ const NonPaymentPage = (props) => {
       alert.error("Error couldnt record your record");
     } else {
       alert.success("Payment Successfuul!");
-      window.location.reload();
+
+      window.location.assign(`/${auth.userType}/withdrawal`);
     }
   };
 
