@@ -19,6 +19,7 @@ export default function InlinePaymentWithSubaccount(props) {
       email: props.data.user.email,
       name: props.data.user.name,
     },
+    subaccounts: props.subaccounts,
     customizations: {
       title: "Jumga Store",
       description: props.data.description,
