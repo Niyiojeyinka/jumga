@@ -92,9 +92,12 @@ function App() {
           <Route path="/orders">
             <OrdersPage />
           </Route>
-          <Route path="/:type/dashboard">
-            <Dashboard />
-          </Route>
+          <Route
+            path="/:type/dashboard"
+            component={(props) => (
+              <Dashboard {...props} key={window.location.pathname} />
+            )}
+          />
           <Route
             path="/category/:category"
             component={(props) => (

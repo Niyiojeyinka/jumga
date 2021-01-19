@@ -40,13 +40,13 @@ const MerchantTemplate = (props) => {
               </ul>
             </li>
             <li>
-              <a href="#">Withdrawal</a>
+              <a href="#">Withdrawal *</a>
             </li>
             <li>
               <a href="#">Manage Orders</a>
             </li>
             <li>
-              <a href="#">Payment Settings</a>
+              <a href="#">Payment Settings*</a>
             </li>
             <li>
               <a href="#">Settings</a>
@@ -73,6 +73,7 @@ const MerchantTemplate = (props) => {
                 <span></span>
                 <span></span>
               </button>
+              <small>*Redundant:now using flutterwave subaccount API</small>
             </div>
           </nav>
           {props.children}

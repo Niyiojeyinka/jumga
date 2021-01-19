@@ -15,11 +15,7 @@ const Dashboard = () => {
       </AuthCheck>
     );
   } else if (type == "merchant") {
-    return (
-      <AuthCheck type={type}>
-        <MerchantDashboard />
-      </AuthCheck>
-    );
+    return <MerchantDashboard />;
   } else if (type == "dispatcher") {
     return (
       <AuthCheck type={type}>

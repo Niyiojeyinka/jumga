@@ -14,7 +14,7 @@ export const cart = (state = initialState, action) => {
       return { products: [...newproducts] };
     case actions.REMOVE_FROM_CART:
       let myproducts = state.products.filter((product) => {
-        return product.id != action.payload.id;
+        return product.id !== action.payload.id;
       });
       return {
         products: [...myproducts],

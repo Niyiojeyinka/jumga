@@ -1,13 +1,38 @@
-import { useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
+import request from "../helpers/request";
+import { useEffect, useState } from "react";
+import Cookies from "universal-cookie";
 
 const AuthCheck = (props) => {
-  const auth = useSelector((store) => store.auth);
+  const cookies = new Cookies();
 
-  if (auth.loggedIn) {
+  const { type } = useParams();
+  const auth = cookies.get("auth");
+
+  const [check, setCheck] = useState(true);
+  useEffect(async () => {
+    if (!auth) {
+      setCheck(false);
+    } else {
+      const res = await request(
+        "merchants/confirm/user/type",
+        "POST",
+        {
+          userId: auth.user?.id,
+          userType: type,
+        },
+        auth.token
+      );
+
+      if (res.status != 200) {
+        setCheck(false);
+      }
+    }
+  }, [check]);
+  if (auth && check) {
     return <>{props.children}</>;
   } else {
-    return <Redirect to={`/${props.type}/login`} />;
+    return <Redirect to={`/${type}/login`} />;
   }
 };
 export default AuthCheck;
