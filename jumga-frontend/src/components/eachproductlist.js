@@ -6,10 +6,9 @@ import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { Redirect } from "react-router-dom";
 import { useState } from "react";
-import addtowishlist from "../actions/storewishlist";
-import addtocart from "../actions/storecart";
+import addtowishlist, { removefromwishlist } from "../actions/storewishlist";
+import addtocart, { removefromcart } from "../actions/storecart";
 import { Link } from "react-router-dom";
-import addToCartArray from "../helpers/addtocart";
 
 const EachProductList = (props) => {
   const auth = useSelector((store) => store.auth);
@@ -18,12 +17,19 @@ const EachProductList = (props) => {
   const dispatch = useDispatch();
   const cart = useSelector((store) => store.cart);
   let products = cart.products;
+  const [toggleWishIcon, setToggleWishIcon] = useState(false);
+  const [toggleCartIcon, setToggleCartIcon] = useState(false);
 
   const addToCart = (product, products, quantity) => {
-    const newProducts = addToCartArray(product, products, quantity, true);
-    dispatch(addtocart(newProducts));
-    alert.success("product(s) added to cart!");
+    dispatch(addtocart({ product, no: quantity }));
+    alert.success("product added to cart!");
   };
+
+  const removeCart = (product) => {
+    dispatch(removefromcart(product));
+    alert.success("Removed from cart!");
+  };
+
   const addToWishlist = (product) => {
     if (auth.loggedIn) {
       dispatch(addtowishlist(product));
@@ -48,19 +54,39 @@ const EachProductList = (props) => {
     }
   };
 
+  const removeWishlist = (product) => {
+    dispatch(removefromwishlist(product));
+    alert.success("Removed from wishlist!");
+  };
+
+  const wishicon = toggleWishIcon ? "fa-heart" : "fa-heart-o";
+  const carticon = toggleCartIcon ? "fa-shopping-cart" : "fa-cart-plus";
+
   const wishlist = props.productListingPageType ? (
     <button
       onClick={() => {
-        addToWishlist(props.product);
+        if (!toggleWishIcon) {
+          addToWishlist(props.product);
+          setToggleWishIcon(true);
+        } else {
+          removeWishlist(props.product);
+          setToggleWishIcon(false);
+        }
       }}
       className="btn bg-white m-2"
     >
-      <i className="fa fa-heart text-yellow"></i>
+      <i className={`fa ${wishicon} text-yellow`}></i>
     </button>
   ) : (
     <button
       onClick={() => {
-        addToWishlist(props.product);
+        if (!toggleCartIcon) {
+          addToCart(props.product);
+          setToggleCartIcon(true);
+        } else {
+          removeCart(props.product);
+          setToggleCartIcon(false);
+        }
       }}
       className="btn bg-white m-2"
     >
@@ -102,11 +128,17 @@ const EachProductList = (props) => {
             <br></br>
             <button
               onClick={() => {
-                addToCart(props.product, products, 1);
+                if (!toggleCartIcon) {
+                  addToCart(props.product);
+                  setToggleCartIcon(true);
+                } else {
+                  removeCart(props.product);
+                  setToggleCartIcon(false);
+                }
               }}
               className="btn bg-white m-3"
             >
-              <i className="fa fa-shopping-cart text-yellow"></i>
+              <i className={`fa ${carticon} text-yellow`}></i>
             </button>
             {wishlist}
           </div>

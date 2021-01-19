@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 const MerchantTemplate = (props) => {
   const [toggleSidebar, setToggleSidebar] = React.useState(false);
 
@@ -9,9 +10,11 @@ const MerchantTemplate = (props) => {
     <>
       <div className="wrapper">
         <nav id="sidebar" className={`${toggleSidebar ? "active" : ""}`}>
-          <div className="sidebar-header">
-            <h3>JUMGA</h3>
-          </div>
+          <Link to="/">
+            <div className="sidebar-header">
+              <h3>JUMGA</h3>
+            </div>
+          </Link>
 
           <ul className="list-unstyled components">
             <div className="p-3">
