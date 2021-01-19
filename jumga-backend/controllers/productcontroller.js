@@ -179,7 +179,7 @@ exports.getByCategory = async (req, res) => {
   } catch (e) {
     return res.status(400).json({
       result: 0,
-      error: e,
+      error: e.toString(),
       data: [],
     });
   }

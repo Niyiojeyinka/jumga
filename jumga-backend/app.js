@@ -6,6 +6,7 @@ const authRoute = require("./routes/auth");
 const pageRoute = require("./routes/page");
 const merchantRoute = require("./routes/merchant");
 const productRoute = require("./routes/products");
+const paymentRoute = require("./routes/payment");
 const path = require("path");
 const db = require("./models");
 const useCor = require("./middlewares/cors");
@@ -20,5 +21,6 @@ app.use("/api/page/", useCor, pageRoute);
 app.use("/api/auth/", useCor, authRoute);
 app.use("/api/products/", useCor, productRoute);
 app.use("/api/merchants/", useCor, merchantRoute);
+app.use("/api/payments/", useCor, paymentRoute);
 
 module.exports = app;
