@@ -4,6 +4,7 @@ const app = express();
 require("dotenv").config();
 const authRoute = require("./routes/auth");
 const pageRoute = require("./routes/page");
+const merchantRoute = require("./routes/merchant");
 const productRoute = require("./routes/products");
 const path = require("path");
 const db = require("./models");
@@ -18,5 +19,6 @@ app.use("/public", express.static(path.join(__dirname, "public")));
 app.use("/api/page/", useCor, pageRoute);
 app.use("/api/auth/", useCor, authRoute);
 app.use("/api/products/", useCor, productRoute);
+app.use("/api/merchants/", useCor, merchantRoute);
 
 module.exports = app;
